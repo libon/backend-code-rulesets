@@ -1,0 +1,96 @@
+<ruleset name="Custom Rules"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
+    <description>A dedicated ruleset for backend projects</description>
+
+    <rule ref="https://raw.githubusercontent.com/jborgers/PMD-jPinpoint-rules/master/rulesets/java/jpinpoint-rules.xml">
+        <exclude name="AvoidExposingMutableRecordState"/>
+        <exclude name="UsingSuppressWarnings"/>
+        <exclude name="AvoidHardcodedConnectionConfig"/>
+        <exclude name="AvoidForEachInStreams"/>
+        <!-- need to tweak rule to exclude case when its level info -->
+        <exclude name="UnconditionalOperationOnLogArgument"/>
+        <!-- rules below fails du to missing exclusions on lombok annotations -->
+        <exclude name="AvoidNonPrivateFieldsInSharedObjects"/>
+    </rule>
+    <rule ref="https://raw.githubusercontent.com/jborgers/PMD-jPinpoint-rules/master/rulesets/java/jpinpoint-rules.xml/AvoidHardcodedConnectionConfig">
+        <properties>
+            <!--Ignore AvoidHardcodedConnectionConfig on classes where the class name ends with IT or Test-->
+            <property name="violationSuppressXPath"
+                      value="//ClassOrInterfaceDeclaration['^Test.*$|^[A-Z][a-zA-Z0-9]*(Test|IT)(s|Case)?$']"/>
+        </properties>
+    </rule>
+    <rule ref="io/github/dgroup/arch4u/pmd/arch4u-ruleset.xml">
+        <exclude name="ClassNamingConventions"/>
+        <exclude name="CommentDefaultAccessModifier"/>
+        <exclude name="CommentRequired"/>
+        <exclude name="GenericsNaming"/>
+        <exclude name="JUnitTestContainsTooManyAsserts"/>
+        <exclude name="LocalVariableCouldBeFinal"/>
+        <exclude name="LongVariable"/>
+        <exclude name="MethodArgumentCouldBeFinal"/>
+        <exclude name="MethodNamingConventions"/>
+        <exclude name="TooManyMethods"/>
+        <exclude name="TooManyStaticImports"/>
+    </rule>
+    <rule ref="category/java/codestyle.xml/ClassNamingConventions">
+        <!--tweak to include test classes that ends with IT-->
+        <properties>
+            <property name="classPattern" value="[A-Z][a-zA-Z0-9]*"/>
+            <property name="abstractClassPattern" value="[A-Z][a-zA-Z0-9]*"/>
+            <property name="interfacePattern" value="[A-Z][a-zA-Z0-9]*"/>
+            <property name="enumPattern" value="[A-Z][a-zA-Z0-9]*"/>
+            <property name="annotationPattern" value="[A-Z][a-zA-Z0-9]*"/>
+            <property name="utilityClassPattern" value="[A-Z][a-zA-Z0-9]*"/>
+            <property name="testClassPattern" value="^Test.*$|^[A-Z][a-zA-Z0-9]*(Test|IT)(s|Case)?$"/>
+        </properties>
+    </rule>
+
+    <rule ref="category/java/codestyle.xml/MethodNamingConventions">
+        <!--tweak to include test methods that uses snake_case -->
+        <properties>
+            <property name="methodPattern" value="[a-z][a-zA-Z0-9]*"/>
+            <property name="staticPattern" value="[a-z][a-zA-Z0-9]*"/>
+            <property name="nativePattern" value="[a-z][a-zA-Z0-9]*"/>
+            <property name="junit3TestPattern" value="test[A-Z0-9][a-zA-Z0-9]*"/>
+            <property name="junit4TestPattern"
+                      value="^(([a-z0-9]+(?:_[a-z0-9]+)*)|([a-z]+(?:[A-Z0-9]+[a-z0-9]+[A-Za-z0-9]*)*))$"/>
+            <property name="junit5TestPattern"
+                      value="^(([a-z0-9]+(?:_[a-z0-9]+)*)|([a-z]+(?:[A-Z0-9]+[a-z0-9]+[A-Za-z0-9]*)*))$"/>
+        </properties>
+    </rule>
+    <rule name="TooManyMethods"
+          language="java"
+          since="4.2"
+          class="net.sourceforge.pmd.lang.rule.XPathRule"
+          message="This class has too many methods, consider refactoring it."
+          externalInfoUrl="${pmd.website.baseurl}/pmd_rules_java_design.html#toomanymethods">
+        <!--tweak to exclude test methods that start with should or ends with Test -->
+        <description>
+            A class with too many methods is probably a good suspect for refactoring, in order to reduce its
+            complexity and find a way to have more fine grained objects.
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="maxmethods" type="Integer" description="The method count reporting threshold" min="1"
+                      max="1000" value="10"/>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+ //ClassOrInterfaceDeclaration/ClassOrInterfaceBody
+     [
+      count(MethodDeclaration[
+         not (
+                (starts-with(@Name,'get') or starts-with(@Name,'set') or starts-with(@Name,'is') or starts-with(@Name,'should') or ends-with(@Name,'Test'))
+                and
+                count(Block/*) <= 1
+            )
+      ]) > $maxmethods
+   ]
+]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+</ruleset>
