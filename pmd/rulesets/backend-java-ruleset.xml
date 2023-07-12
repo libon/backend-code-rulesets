@@ -9,6 +9,7 @@
         <exclude name="UsingSuppressWarnings"/>
         <exclude name="AvoidHardcodedConnectionConfig"/>
         <exclude name="AvoidForEachInStreams"/>
+        <exclude name="LimitStatementsInLambdas"/>
         <!-- rule present in another ruleset and better implemented there -->
         <exclude name="LetFieldsMeetSerializable"/>
         <!-- need to tweak rule to exclude case when its level info -->
@@ -16,6 +17,12 @@
         <!-- rules below fails du to missing exclusions on lombok annotations, deactivated until tweaked -->
         <exclude name="AvoidNonPrivateFieldsInSharedObjects"/>
         <exclude name="AvoidUnguardedMutableFieldsInSharedObjects"/>
+    </rule>
+    <rule ref="https://raw.githubusercontent.com/jborgers/PMD-jPinpoint-rules/master/rulesets/java/jpinpoint-rules.xml/LimitStatementsInLambdas">
+        <properties>
+            <!-- increase statement numbers allowed in lambdas -->
+            <property name="param-max" value="15"/>
+        </properties>
     </rule>
     <rule ref="https://raw.githubusercontent.com/jborgers/PMD-jPinpoint-rules/master/rulesets/java/jpinpoint-rules.xml/AvoidHardcodedConnectionConfig">
         <properties>
@@ -29,12 +36,14 @@
         <exclude name="ClassNamingConventions"/>
         <exclude name="CommentDefaultAccessModifier"/>
         <exclude name="CommentRequired"/>
+        <exclude name="ExcessiveParameterList"/>
         <exclude name="GenericsNaming"/>
         <exclude name="JUnitTestContainsTooManyAsserts"/>
         <exclude name="LocalVariableCouldBeFinal"/>
         <exclude name="LongVariable"/>
         <exclude name="MethodArgumentCouldBeFinal"/>
         <exclude name="MethodNamingConventions"/>
+        <exclude name="NullAssignment"/>
         <exclude name="ShortVariable"/>
         <exclude name="TooManyMethods"/>
         <exclude name="TooManyStaticImports"/>
@@ -70,6 +79,13 @@
         <!-- tweak to ignore some valid short variable names -->
         <properties>
             <property name="violationSuppressRegex" value="Avoid variables with short names like (id|ids)"/>
+        </properties>
+    </rule>
+    <rule ref="category/java/design.xml/ExcessiveParameterList">
+        <!-- exclude constructors from rule -->
+        <properties>
+            <property name="violationSuppressXPath"
+                      value="//ClassOrInterfaceDeclaration[ClassOrInterfaceBody[not(ConstructorDeclaration)]]"/>
         </properties>
     </rule>
     <rule ref="category/java/errorprone.xml/AvoidFieldNameMatchingMethodName">
