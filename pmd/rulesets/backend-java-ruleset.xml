@@ -58,7 +58,7 @@
             <property name="enumPattern" value="[A-Z][a-zA-Z0-9]*"/>
             <property name="annotationPattern" value="[A-Z][a-zA-Z0-9]*"/>
             <property name="utilityClassPattern" value="[A-Z][a-zA-Z0-9]*"/>
-            <property name="testClassPattern" value="^Test.*$|^[A-Z][a-zA-Z0-9]*(Test|IT)(s|Case)?$"/>
+            <property name="testClassPattern" value="^Test.*$|^[A-Z][a-zA-Z0-9_]*(Test|IT)(s|Case)?$"/>
         </properties>
     </rule>
 
@@ -78,7 +78,7 @@
     <rule ref="category/java/codestyle.xml/ShortVariable">
         <!-- tweak to ignore some valid short variable names -->
         <properties>
-            <property name="violationSuppressRegex" value="Avoid variables with short names like (id|ids)"/>
+            <property name="violationSuppressRegex" value="Avoid variables with short names like (id|ids|os)"/>
         </properties>
     </rule>
     <rule ref="category/java/design.xml/ExcessiveParameterList">
