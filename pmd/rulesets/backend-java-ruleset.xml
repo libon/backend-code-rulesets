@@ -70,9 +70,9 @@
             <property name="nativePattern" value="[a-z][a-zA-Z0-9]*"/>
             <property name="junit3TestPattern" value="test[A-Z0-9][a-zA-Z0-9]*"/>
             <property name="junit4TestPattern"
-                      value="^(([a-z0-9]+(?:_[a-z0-9]+)*)|([a-z]+(?:[A-Z0-9]+[a-z0-9]+[A-Za-z0-9]*)*))$"/>
+                      value="^(([a-z0-9]+(?:_[a-zA-Z0-9]+)*)|([a-z]+(?:[A-Z0-9]+[a-z0-9]+[A-Za-z0-9]*)*))$"/>
             <property name="junit5TestPattern"
-                      value="^(([a-z0-9]+(?:_[a-z0-9]+)*)|([a-z]+(?:[A-Z0-9]+[a-z0-9]+[A-Za-z0-9]*)*))$"/>
+                      value="^(([a-z0-9]+(?:_[a-zA-Z0-9]+)*)|([a-z]+(?:[A-Z0-9]+[a-z0-9]+[A-Za-z0-9]*)*))$"/>
         </properties>
     </rule>
     <rule ref="category/java/codestyle.xml/ShortVariable">
