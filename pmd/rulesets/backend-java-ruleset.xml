@@ -34,6 +34,7 @@
     <rule ref="io/github/dgroup/arch4u/pmd/arch4u-ruleset.xml">
         <exclude name="AvoidFieldNameMatchingMethodName"/>
         <exclude name="ClassNamingConventions"/>
+        <exclude name="CloseResource"/>
         <exclude name="CommentDefaultAccessModifier"/>
         <exclude name="CommentRequired"/>
         <exclude name="ExcessiveParameterList"/>
@@ -93,6 +94,13 @@
             <!--Ignore AvoidFieldNameMatchingMethodName on Builders and Test Classes-->
             <property name="violationSuppressXPath"
                       value="//ClassOrInterfaceDeclaration['^.*Builder$|^[A-Z][a-zA-Z0-9]*(Test|IT)(s|Case)?$']"/>
+        </properties>
+    </rule>
+    <rule ref="category/java/errorprone.xml/CloseResource">
+        <properties>
+            <!--Ignore CloseResource on Test Classes-->
+            <property name="violationSuppressXPath"
+                      value="//ClassOrInterfaceDeclaration['^Test.*$|^[A-Z][a-zA-Z0-9_]*(Test|IT)(s|Case)?$']"/>
         </properties>
     </rule>
 
