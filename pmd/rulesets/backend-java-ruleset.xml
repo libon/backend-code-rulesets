@@ -48,8 +48,10 @@
         <exclude name="ShortVariable"/>
         <exclude name="TooManyMethods"/>
         <exclude name="TooManyStaticImports"/>
+        <exclude name="UncommentedEmptyConstructor"/>
         <exclude name="UseUnderscoresInNumericLiterals"/>
     </rule>
+
     <rule ref="category/java/codestyle.xml/ClassNamingConventions">
         <!--tweak to include test classes that ends with IT-->
         <properties>
@@ -89,6 +91,15 @@
                       value="//ClassOrInterfaceDeclaration[ClassOrInterfaceBody[not(ConstructorDeclaration)]]"/>
         </properties>
     </rule>
+    <rule ref="category/java/documentation.xml/UncommentedEmptyConstructor">
+        <properties>
+            <!-- ignore empty constructor on model classes as it is needed for Jackson
+            and on entity classes as it is needed for hibernate-->
+            <property name="violationSuppressXPath"
+                      value="//ClassOrInterfaceDeclaration['^[A-Z].*(Entity|Model)$']"/>
+        </properties>
+    </rule>
+
     <rule ref="category/java/errorprone.xml/AvoidFieldNameMatchingMethodName">
         <properties>
             <!--Ignore AvoidFieldNameMatchingMethodName on Builders and Test Classes-->
