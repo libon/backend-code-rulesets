@@ -92,8 +92,7 @@
         <!-- remove entities from rule -->
         <properties>
             <property name="violationSuppressXPath"
-                      value="//(TypeDeclaration|ClassOrInterfaceBodyDeclaration/ClassOrInterfaceDeclaration..)/Annotation[MarkerAnnotation/Name
-[@Image='Entity']]"/>
+                      value="//TypeDeclaration/Annotation/MarkerAnnotation/Name[@Image='Entity']"/>
         </properties>
     </rule>
     <rule ref="category/java/design.xml/ExcessiveParameterList">
