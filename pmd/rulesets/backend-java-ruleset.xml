@@ -37,8 +37,10 @@
         <exclude name="CloseResource"/>
         <exclude name="CommentDefaultAccessModifier"/>
         <exclude name="CommentRequired"/>
+        <exclude name="DataClass"/>
         <exclude name="ExcessiveParameterList"/>
         <exclude name="GenericsNaming"/>
+        <exclude name="JUnitAssertionsShouldIncludeMessage"/>
         <exclude name="JUnitTestContainsTooManyAsserts"/>
         <exclude name="LocalVariableCouldBeFinal"/>
         <exclude name="LongVariable"/>
@@ -82,6 +84,14 @@
         <!-- tweak to ignore some valid short variable names -->
         <properties>
             <property name="violationSuppressRegex" value="Avoid variables with short names like (id|ids|os)"/>
+        </properties>
+    </rule>
+    <rule ref="category/java/design.xml/DataClass">
+        <!-- remove entities from rule -->
+        <properties>
+            <property name="violationSuppressXPath"
+                      value="//(TypeDeclaration|ClassOrInterfaceBodyDeclaration/ClassOrInterfaceDeclaration..)/Annotation[MarkerAnnotation/Name
+[@Image='Entity']]"/>
         </properties>
     </rule>
     <rule ref="category/java/design.xml/ExcessiveParameterList">
