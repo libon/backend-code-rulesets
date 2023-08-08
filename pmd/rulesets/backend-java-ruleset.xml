@@ -17,6 +17,8 @@
         <!-- rules below fails du to missing exclusions on lombok annotations, deactivated until tweaked -->
         <exclude name="AvoidNonPrivateFieldsInSharedObjects"/>
         <exclude name="AvoidUnguardedMutableFieldsInSharedObjects"/>
+        <!-- rule AvoidModifyingObjectMapper is sufficient for us -->
+        <exclude name="AvoidObjectMapperAsField"/>
     </rule>
     <rule ref="https://raw.githubusercontent.com/jborgers/PMD-jPinpoint-rules/master/rulesets/java/jpinpoint-rules.xml/LimitStatementsInLambdas">
         <properties>
