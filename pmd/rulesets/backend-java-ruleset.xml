@@ -85,7 +85,8 @@
     <rule ref="category/java/codestyle.xml/ShortVariable">
         <!-- tweak to ignore some valid short variable names -->
         <properties>
-            <property name="violationSuppressRegex" value="Avoid variables with short names like (id|ids|os)"/>
+            <property name="violationSuppressRegex"
+                      value="(?i)Avoid variables with short names like (id|ids|os)"/>
         </properties>
     </rule>
     <rule ref="category/java/design.xml/DataClass">
