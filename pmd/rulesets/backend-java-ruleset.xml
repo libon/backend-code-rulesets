@@ -34,6 +34,8 @@
         </properties>
     </rule>
     <rule ref="io/github/dgroup/arch4u/pmd/arch4u-ruleset.xml">
+        <!-- Too many false positive, as rule doesn't take object creation with interator derived objects into consideration-->
+        <exclude name="AvoidInstantiatingObjectsInLoops"/>
         <exclude name="AvoidFieldNameMatchingMethodName"/>
         <!-- UselessParentheses to reactivate in pmd 7.0.0 when it will have property ignoreClarifying-->
         <exclude name="UselessParentheses"/>
