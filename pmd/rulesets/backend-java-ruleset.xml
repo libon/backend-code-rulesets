@@ -53,6 +53,7 @@
         <exclude name="MethodArgumentCouldBeFinal"/>
         <exclude name="MethodNamingConventions"/>
         <exclude name="NullAssignment"/>
+        <exclude name="ShortMethodName"/>
         <exclude name="ShortVariable"/>
         <exclude name="TooManyMethods"/>
         <exclude name="TooManyStaticImports"/>
@@ -86,6 +87,14 @@
                       value="^(([a-z0-9]+(?:_[a-zA-Z0-9]+)*)|([a-z]+(?:[A-Z0-9]+[a-z0-9]+[A-Za-z0-9]*)*))$"/>
         </properties>
     </rule>
+    <rule ref="category/java/codestyle.xml/ShortMethodName">
+        <!-- tweak to ignore some valid short method names -->
+        <properties>
+            <property name="violationSuppressXPath"
+                      value="//MethodDeclaration[matches(@Name, 'id')]"/>
+        </properties>
+    </rule>
+
     <rule ref="category/java/codestyle.xml/ShortVariable">
         <!-- tweak to ignore some valid short variable names -->
         <properties>
