@@ -58,6 +58,7 @@
         <exclude name="TooManyMethods"/>
         <exclude name="TooManyStaticImports"/>
         <exclude name="UncommentedEmptyConstructor"/>
+        <exclude name="UnnecessaryFullyQualifiedName"/>
         <exclude name="UseUnderscoresInNumericLiterals"/>
     </rule>
 
@@ -102,6 +103,14 @@
                       value="(?i)Avoid variables with short names like (id|ids|os)"/>
         </properties>
     </rule>
+    <rule ref="category/java/codestyle.xml/UnnecessaryFullyQualifiedName">
+        <!-- remove short methods name from rule violation -->
+        <properties>
+            <property name="violationSuppressXPath"
+                      value="//PrimaryExpression/PrimaryPrefix/Name[contains(@Image,'.') and (3 > string-length(substring-after(@Image,'.')) )]"/>
+        </properties>
+    </rule>
+
     <rule ref="category/java/design.xml/DataClass">
         <!-- remove entities from rule -->
         <properties>
