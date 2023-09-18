@@ -19,6 +19,9 @@
         <exclude name="AvoidUnguardedMutableFieldsInSharedObjects"/>
         <!-- rule AvoidModifyingObjectMapper is sufficient for us -->
         <exclude name="AvoidObjectMapperAsField"/>
+        <!-- rule NonComparableMapKeys deactivated as we can't easily restrict it to our packages.
+        To reactivate in pmd 7.0.0 as each node will have a getRoot method which will return package name -->
+        <exclude name="NonComparableMapKeys"/>
     </rule>
     <rule ref="https://raw.githubusercontent.com/jborgers/PMD-jPinpoint-rules/master/rulesets/java/jpinpoint-rules.xml/LimitStatementsInLambdas">
         <properties>
