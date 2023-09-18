@@ -59,6 +59,7 @@
         <exclude name="TooManyStaticImports"/>
         <exclude name="UncommentedEmptyConstructor"/>
         <exclude name="UnnecessaryFullyQualifiedName"/>
+        <exclude name="UseLocaleWithCaseConversions"/>
         <exclude name="UseUnderscoresInNumericLiterals"/>
     </rule>
 
