@@ -33,7 +33,7 @@
         <properties>
             <!--Ignore AvoidHardcodedConnectionConfig on classes where the class name ends with IT or Test-->
             <property name="violationSuppressXPath"
-                      value="//ClassOrInterfaceDeclaration['^Test.*$|^[A-Z][a-zA-Z0-9]*(Test|IT)(s|Case)?$']"/>
+                      value="//ClassOrInterfaceDeclaration['^[A-Z][a-zA-Z0-9]*(Test|IT)(s|Case)?$']"/>
         </properties>
     </rule>
     <rule ref="io/github/dgroup/arch4u/pmd/arch4u-ruleset.xml">
@@ -75,7 +75,7 @@
             <property name="enumPattern" value="[A-Z][a-zA-Z0-9]*"/>
             <property name="annotationPattern" value="[A-Z][a-zA-Z0-9]*"/>
             <property name="utilityClassPattern" value="[A-Z][a-zA-Z0-9]*"/>
-            <property name="testClassPattern" value="^Test.*$|^[A-Z][a-zA-Z0-9_]*(Test|IT)(s|Case)?$"/>
+            <property name="testClassPattern" value="^[A-Z][a-zA-Z0-9_]*(Test|IT)(s|Case)?$"/>
         </properties>
     </rule>
 
@@ -149,7 +149,7 @@
         <properties>
             <!--Ignore CloseResource on Test Classes-->
             <property name="violationSuppressXPath"
-                      value="//ClassOrInterfaceDeclaration['^Test.*$|^[A-Z][a-zA-Z0-9_]*(Test|IT)(s|Case)?$']"/>
+                      value="//ClassOrInterfaceDeclaration['^[A-Z][a-zA-Z0-9_]*(Test|IT)(s|Case)?$']"/>
         </properties>
     </rule>
 
