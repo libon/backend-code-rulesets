@@ -55,6 +55,7 @@
         <exclude name="LongVariable"/>
         <exclude name="MethodArgumentCouldBeFinal"/>
         <exclude name="MethodNamingConventions"/>
+        <exclude name="NonSerializableClass"/>
         <exclude name="NullAssignment"/>
         <exclude name="ShortMethodName"/>
         <exclude name="ShortVariable"/>
