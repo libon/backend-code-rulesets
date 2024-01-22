@@ -36,7 +36,7 @@
                       value="//ClassOrInterfaceDeclaration['^[A-Z][a-zA-Z0-9]*(Test|IT)(s|Case)?$']"/>
         </properties>
     </rule>
-    <rule ref="io/github/dgroup/arch4u/pmd/arch4u-ruleset.xml">
+    <rule ref="https://raw.githubusercontent.com/libon/backend-code-rulesets/tweaks-for-pmd-7.0.0/pmd/rulesets/arch4u-ruleset-tweaked.xml">
         <!-- Too many false positive, as rule doesn't take object creation with interator derived objects into consideration-->
         <exclude name="AvoidInstantiatingObjectsInLoops"/>
         <exclude name="AvoidFieldNameMatchingMethodName"/>
@@ -46,12 +46,15 @@
         <exclude name="CloseResource"/>
         <exclude name="CommentDefaultAccessModifier"/>
         <exclude name="CommentRequired"/>
+        <exclude name="ConstructorCallsOverridableMethod"/>
         <exclude name="DataClass"/>
+        <exclude name="DoNotUseThreads"/>
         <exclude name="ExcessiveParameterList"/>
         <exclude name="GenericsNaming"/>
         <exclude name="JUnitAssertionsShouldIncludeMessage"/>
         <exclude name="JUnitTestContainsTooManyAsserts"/>
         <exclude name="LocalVariableCouldBeFinal"/>
+        <exclude name="LooseCoupling"/>
         <exclude name="LongVariable"/>
         <exclude name="MethodArgumentCouldBeFinal"/>
         <exclude name="MethodNamingConventions"/>
@@ -66,6 +69,7 @@
         <exclude name="UseLocaleWithCaseConversions"/>
         <exclude name="UseUnderscoresInNumericLiterals"/>
     </rule>
+
 
     <rule ref="category/java/codestyle.xml/ClassNamingConventions">
         <!--tweak to include test classes that ends with IT-->
@@ -127,7 +131,7 @@
         <!-- exclude constructors from rule -->
         <properties>
             <property name="violationSuppressXPath"
-                      value="//ClassOrInterfaceDeclaration[ClassOrInterfaceBody[not(ConstructorDeclaration)]]"/>
+                      value="//ConstructorDeclaration"/>
         </properties>
     </rule>
     <rule ref="category/java/documentation.xml/UncommentedEmptyConstructor">
@@ -153,7 +157,13 @@
                       value="//ClassOrInterfaceDeclaration['^[A-Z][a-zA-Z0-9_]*(Test|IT)(s|Case)?$']"/>
         </properties>
     </rule>
-
+    <rule ref="category/java/errorprone.xml/ConstructorCallsOverridableMethod">
+        <properties>
+            <!--Ignore Rule when suppress warning is set-->
+            <property name="violationSuppressXPath"
+                      value="//ConstructorDeclaration//Annotation[@SimpleName ='SuppressWarnings']//MemberValuePair/StringLiteral[@ConstValue = 'this-escape']"/>
+        </properties>
+    </rule>
 
     <rule name="TooManyMethods"
           language="java"
@@ -169,7 +179,7 @@
         <priority>3</priority>
         <properties>
             <property name="maxmethods" type="Integer" description="The method count reporting threshold" min="1"
-                      max="1000" value="10"/>
+                      max="1000" value="20"/>
             <property name="xpath">
                 <value>
                     <![CDATA[
@@ -177,15 +187,24 @@
      [
       count(MethodDeclaration[
          not (
-                (starts-with(@Name,'get') or starts-with(@Name,'set') or starts-with(@Name,'is') or starts-with(@Name,'should') or ends-with(@Name,'Test'))
-                and
-                count(Block/*) <= 1
+                starts-with(@Name,'get')
+                or starts-with(@Name,'set')
+                or starts-with(@Name,'is')
+                or starts-with(@Name,'should')
+                or ends-with(@Name,'Test')
             )
       ]) > $maxmethods
    ]
 ]]>
                 </value>
             </property>
+        </properties>
+    </rule>
+    <rule ref="category/java/multithreading.xml/DoNotUseThreads">
+        <properties>
+            <!--Ignore AvoidHardcodedConnectionConfig on classes where the class name ends with IT or Test-->
+            <property name="violationSuppressXPath"
+                      value="//ClassOrInterfaceDeclaration['^[A-Z][a-zA-Z0-9]*(Test|IT)(s|Case)?$']"/>
         </properties>
     </rule>
 </ruleset>
