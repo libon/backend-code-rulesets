@@ -131,7 +131,7 @@
         <!-- exclude constructors from rule -->
         <properties>
             <property name="violationSuppressXPath"
-                      value="//ConstructorDeclaration"/>
+                      value="//ConstructorDeclaration | //MethodDeclaration//Annotation[@SimpleName = 'Override']"/>
         </properties>
     </rule>
     <rule ref="category/java/documentation.xml/UncommentedEmptyConstructor">
