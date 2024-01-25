@@ -47,6 +47,7 @@
         <exclude name="CommentDefaultAccessModifier"/>
         <exclude name="CommentRequired"/>
         <exclude name="ConstructorCallsOverridableMethod"/>
+        <exclude name="CyclomaticComplexity"/>
         <exclude name="DataClass"/>
         <exclude name="DoNotUseThreads"/>
         <exclude name="ExcessiveParameterList"/>
@@ -127,6 +128,13 @@
                       value="//TypeDeclaration/Annotation/MarkerAnnotation/Name[@Image='Entity']"/>
         </properties>
     </rule>
+    <rule ref="category/java/design.xml/CyclomaticComplexity">
+        <priority>5</priority>
+        <properties>
+            <property name="methodReportLevel" value="20"/>
+        </properties>
+    </rule>
+
     <rule ref="category/java/design.xml/ExcessiveParameterList">
         <!-- exclude constructors from rule -->
         <properties>
@@ -174,7 +182,7 @@
         <!--tweak to exclude test methods that start with should or ends with Test -->
         <description>
             A class with too many methods is probably a good suspect for refactoring, in order to reduce its
-            complexity and find a way to have more fine grained objects.
+            complexity and find a way to have more fine-grained objects.
         </description>
         <priority>3</priority>
         <properties>
