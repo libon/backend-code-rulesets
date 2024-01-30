@@ -33,7 +33,7 @@
         <properties>
             <!--Ignore AvoidHardcodedConnectionConfig on classes where the class name ends with IT or Test-->
             <property name="violationSuppressXPath"
-                      value="//ClassOrInterfaceDeclaration['^[A-Z][a-zA-Z0-9]*(Test|IT)(s|Case)?$']"/>
+                      value="//ClassOrInterfaceDeclaration['^[A-Z][a-zA-Z0-9]+(Test|IT)(s|Case)?$']"/>
         </properties>
     </rule>
     <rule ref="https://raw.githubusercontent.com/libon/backend-code-rulesets/tweaks-for-pmd-7.0.0/pmd/rulesets/arch4u-ruleset-tweaked.xml">
@@ -65,6 +65,7 @@
         <exclude name="ShortVariable"/>
         <exclude name="TooManyMethods"/>
         <exclude name="TooManyStaticImports"/>
+        <exclude name="TestClassWithoutTestCases"/>
         <exclude name="UncommentedEmptyConstructor"/>
         <exclude name="UnnecessaryFullyQualifiedName"/>
         <exclude name="UseLocaleWithCaseConversions"/>
@@ -81,7 +82,7 @@
             <property name="enumPattern" value="[A-Z][a-zA-Z0-9]*"/>
             <property name="annotationPattern" value="[A-Z][a-zA-Z0-9]*"/>
             <property name="utilityClassPattern" value="[A-Z][a-zA-Z0-9]*"/>
-            <property name="testClassPattern" value="^[A-Z][a-zA-Z0-9_]*(Test|IT)(s|Case)?$"/>
+            <property name="testClassPattern" value="^[A-Z][a-zA-Z0-9_]+(Test|IT)(s|Case)?$"/>
         </properties>
     </rule>
 
@@ -155,14 +156,14 @@
         <properties>
             <!--Ignore AvoidFieldNameMatchingMethodName on Builders and Test Classes-->
             <property name="violationSuppressXPath"
-                      value="//ClassOrInterfaceDeclaration['^.*Builder$|^[A-Z][a-zA-Z0-9]*(Test|IT)(s|Case)?$']"/>
+                      value="//ClassOrInterfaceDeclaration['^.*Builder$|^[A-Z][a-zA-Z0-9]+(Test|IT)(s|Case)?$']"/>
         </properties>
     </rule>
     <rule ref="category/java/errorprone.xml/CloseResource">
         <properties>
             <!--Ignore CloseResource on Test Classes-->
             <property name="violationSuppressXPath"
-                      value="//ClassOrInterfaceDeclaration['^[A-Z][a-zA-Z0-9_]*(Test|IT)(s|Case)?$']"/>
+                      value="//ClassOrInterfaceDeclaration['^[A-Z][a-zA-Z0-9_]+(Test|IT)(s|Case)?$']"/>
         </properties>
     </rule>
     <rule ref="category/java/errorprone.xml/ConstructorCallsOverridableMethod">
@@ -170,6 +171,11 @@
             <!--Ignore Rule when suppress warning is set-->
             <property name="violationSuppressXPath"
                       value="//ConstructorDeclaration//Annotation[@SimpleName ='SuppressWarnings']//MemberValuePair/StringLiteral[@ConstValue = 'this-escape']"/>
+        </properties>
+    </rule>
+    <rule ref="category/java/errorprone.xml/TestClassWithoutTestCases">
+        <properties>
+            <property name="testClassPattern" value="^[A-Z][a-zA-Z0-9_]+(Test|IT)(s|Case)?$"/>
         </properties>
     </rule>
 
@@ -212,7 +218,7 @@
         <properties>
             <!--Ignore AvoidHardcodedConnectionConfig on classes where the class name ends with IT or Test-->
             <property name="violationSuppressXPath"
-                      value="//ClassOrInterfaceDeclaration['^[A-Z][a-zA-Z0-9]*(Test|IT)(s|Case)?$']"/>
+                      value="//ClassOrInterfaceDeclaration['^[A-Z][a-zA-Z0-9]+(Test|IT)(s|Case)?$']"/>
         </properties>
     </rule>
 </ruleset>
