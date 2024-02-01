@@ -33,7 +33,7 @@
         <properties>
             <!--Ignore AvoidHardcodedConnectionConfig on classes where the class name ends with IT or Test-->
             <property name="violationSuppressXPath"
-                      value="//ClassOrInterfaceDeclaration['^[A-Z][a-zA-Z0-9]+(Test|IT)(s|Case)?$']"/>
+                      value="//ClassOrInterfaceDeclaration[matches(@SimpleName,'^[A-Z][a-zA-Z0-9_]+(Test|IT)(s|Case)?$')]"/>
         </properties>
     </rule>
     <rule ref="https://raw.githubusercontent.com/libon/backend-code-rulesets/tweaks-for-pmd-7.0.0/pmd/rulesets/arch4u-ruleset-tweaked.xml">
@@ -151,22 +151,29 @@
             <!-- ignore empty constructor on model classes as it is needed for Jackson
             and on entity classes as it is needed for hibernate-->
             <property name="violationSuppressXPath"
-                      value="//ClassOrInterfaceDeclaration['^[A-Z].*(Entity|Model)$']"/>
+                      value="//ClassOrInterfaceDeclaration[matches(@SimpleName,'^[A-Z].*(Entity|Model)$')]"/>
         </properties>
     </rule>
 
     <rule ref="category/java/errorprone.xml/AvoidFieldNameMatchingMethodName">
         <properties>
-            <!--Ignore AvoidFieldNameMatchingMethodName on Builders and Test Classes-->
+            <!--Ignore AvoidFieldNameMatchingMethodName on Builders and Test Classes -->
+            <!-- Only match other classes when there are getter or setter-->
             <property name="violationSuppressXPath"
-                      value="//ClassOrInterfaceDeclaration['^.*Builder$|^[A-Z][a-zA-Z0-9]+(Test|IT)(s|Case)?$']"/>
+                      value="//ClassOrInterfaceDeclaration[matches(@SimpleName,'^.*Builder$|^[A-Z][a-zA-Z0-9]+(Test|IT)(s|Case)?$')]
+                            | (//ClassOrInterfaceDeclaration/ClassOrInterfaceBody|//EnumDeclaration/EnumBody)[
+                              count(MethodDeclaration[
+                                        starts-with(@Name,'get')
+                                        or starts-with(@Name,'set')
+                              ]) = 0
+                           ]"/>
         </properties>
     </rule>
     <rule ref="category/java/errorprone.xml/CloseResource">
         <properties>
             <!--Ignore CloseResource on Test Classes-->
             <property name="violationSuppressXPath"
-                      value="//ClassOrInterfaceDeclaration['^[A-Z][a-zA-Z0-9_]+(Test|IT)(s|Case)?$']"/>
+                      value="//ClassOrInterfaceDeclaration[matches(@SimpleName,'^[A-Z][a-zA-Z0-9_]+(Test|IT)(s|Case)?$')]"/>
         </properties>
     </rule>
     <rule ref="category/java/errorprone.xml/ConstructorCallsOverridableMethod">
@@ -221,7 +228,7 @@
         <properties>
             <!--Ignore AvoidHardcodedConnectionConfig on classes where the class name ends with IT or Test-->
             <property name="violationSuppressXPath"
-                      value="//ClassOrInterfaceDeclaration['^[A-Z][a-zA-Z0-9]+(Test|IT)(s|Case)?$']"/>
+                      value="//ClassOrInterfaceDeclaration[matches(@SimpleName,'^[A-Z][a-zA-Z0-9_]+(Test|IT)(s|Case)?$')]"/>
         </properties>
     </rule>
     <rule ref="category/java/performance.xml/TooFewBranchesForASwitchStatement">
