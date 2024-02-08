@@ -63,6 +63,9 @@
         <exclude name="NullAssignment"/>
         <exclude name="ShortMethodName"/>
         <exclude name="ShortVariable"/>
+        <!-- to enable back when https://github.com/pmd/pmd/issues/4813 is fixed-->
+        <exclude name="SwitchStmtsShouldHaveDefault"/>
+        <exclude name="TooFewBranchesForASwitchStatements"/>
         <exclude name="TooManyMethods"/>
         <exclude name="TooManyStaticImports"/>
         <exclude name="TestClassWithoutTestCases"/>
@@ -219,6 +222,11 @@
             <!--Ignore AvoidHardcodedConnectionConfig on classes where the class name ends with IT or Test-->
             <property name="violationSuppressXPath"
                       value="//ClassOrInterfaceDeclaration['^[A-Z][a-zA-Z0-9]+(Test|IT)(s|Case)?$']"/>
+        </properties>
+    </rule>
+    <rule ref="category/java/performance.xml/TooFewBranchesForASwitchStatement">
+        <properties>
+            <property name="minimumNumberCaseForASwitch" value="2"/>
         </properties>
     </rule>
 </ruleset>
