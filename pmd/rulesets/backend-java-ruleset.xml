@@ -65,7 +65,7 @@
         <exclude name="ShortVariable"/>
         <!-- to enable back when https://github.com/pmd/pmd/issues/4813 is fixed-->
         <exclude name="SwitchStmtsShouldHaveDefault"/>
-        <exclude name="TooFewBranchesForASwitchStatements"/>
+        <exclude name="TooFewBranchesForASwitchStatement"/>
         <exclude name="TooManyMethods"/>
         <exclude name="TooManyStaticImports"/>
         <exclude name="TestClassWithoutTestCases"/>
