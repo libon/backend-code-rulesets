@@ -71,10 +71,18 @@
         <exclude name="TestClassWithoutTestCases"/>
         <exclude name="UncommentedEmptyConstructor"/>
         <exclude name="UnnecessaryFullyQualifiedName"/>
+        <exclude name="UnusedPrivateMethod"/>
         <exclude name="UseLocaleWithCaseConversions"/>
         <exclude name="UseUnderscoresInNumericLiterals"/>
     </rule>
 
+    <rule ref="category/java/bestpractices.xml/UnusedPrivateMethod">
+        <properties>
+            <property name="ignoredAnnotations" value="java.lang.Deprecated,jakarta.validation.constraints.AssertTrue"/>
+            <property name="violationSuppressXPath"
+                      value="//ClassOrInterfaceDeclaration//Annotation/ClassOrInterfaceType[@SimpleName='PostConstruct']"/>
+        </properties>
+    </rule>
 
     <rule ref="category/java/codestyle.xml/ClassNamingConventions">
         <!--tweak to include test classes that ends with IT-->
