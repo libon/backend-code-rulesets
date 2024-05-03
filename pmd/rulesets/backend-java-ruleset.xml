@@ -23,13 +23,13 @@
         To reactivate in pmd 7.0.0 as each node will have a getRoot method which will return package name -->
         <exclude name="NonComparableMapKeys"/>
     </rule>
-    <rule ref="https://raw.githubusercontent.com/jborgers/PMD-jPinpoint-rules/master/rulesets/java/jpinpoint-rules.xml/LimitStatementsInLambdas">
+    <rule ref="https://raw.githubusercontent.com/jborgers/PMD-jPinpoint-rules/44375f0e771757ad0798d2e6947d3aa37ef69d3d/rulesets/java/jpinpoint-rules.xml/LimitStatementsInLambdas">
         <properties>
             <!-- increase statement numbers allowed in lambdas -->
             <property name="param-max" value="15"/>
         </properties>
     </rule>
-    <rule ref="https://raw.githubusercontent.com/jborgers/PMD-jPinpoint-rules/master/rulesets/java/jpinpoint-rules.xml/AvoidHardcodedConnectionConfig">
+    <rule ref="https://raw.githubusercontent.com/jborgers/PMD-jPinpoint-rules/44375f0e771757ad0798d2e6947d3aa37ef69d3d/rulesets/java/jpinpoint-rules.xml/AvoidHardcodedConnectionConfig">
         <properties>
             <!--Ignore AvoidHardcodedConnectionConfig on classes where the class name ends with IT or Test-->
             <property name="violationSuppressXPath"
