@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
     <description>A dedicated ruleset for backend projects</description>
 
-    <rule ref="https://raw.githubusercontent.com/jborgers/PMD-jPinpoint-rules/master/rulesets/java/jpinpoint-rules.xml">
+    <rule ref="https://raw.githubusercontent.com/jborgers/PMD-jPinpoint-rules/44375f0e771757ad0798d2e6947d3aa37ef69d3d/rulesets/java/jpinpoint-rules.xml">
         <exclude name="AvoidExposingMutableRecordState"/>
         <exclude name="UsingSuppressWarnings"/>
         <exclude name="AvoidHardcodedConnectionConfig"/>
