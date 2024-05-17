@@ -186,10 +186,11 @@
     </rule>
     <rule ref="category/java/errorprone.xml/ConstructorCallsOverridableMethod">
         <properties>
-            <!--Ignore Rule when suppress warning is set or if class extends-->
+            <!--Ignore Rule when suppress warning is set or if class extends, or on entities (due to hibernate exception) -->
             <property name="violationSuppressXPath"
                       value="//ConstructorDeclaration//Annotation[@SimpleName ='SuppressWarnings']//MemberValuePair/StringLiteral[@ConstValue = 'this-escape']
-                             | //ClassOrInterfaceDeclaration/ExtendsList//ClassOrInterfaceType[@SimpleName = 'ResourceConfig']"/>
+                             | //ClassOrInterfaceDeclaration/ExtendsList//ClassOrInterfaceType[@SimpleName = 'ResourceConfig']
+                             | //ClassDeclaration/ModifierList/Annotation[@SimpleName='Entity']"/>
         </properties>
     </rule>
     <rule ref="category/java/errorprone.xml/TestClassWithoutTestCases">
