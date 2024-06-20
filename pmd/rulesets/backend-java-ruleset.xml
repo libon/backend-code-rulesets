@@ -134,10 +134,11 @@
     </rule>
 
     <rule ref="category/java/design.xml/DataClass">
-        <!-- remove entities from rule -->
+        <!-- remove entities and utility class from rule -->
         <properties>
             <property name="violationSuppressXPath"
-                      value="//TypeDeclaration/Annotation/MarkerAnnotation/Name[@Image='Entity']"/>
+                      value="//TypeDeclaration/Annotation/MarkerAnnotation/Name[@Image='Entity']
+                             | //TypeDeclaration/Annotation/MarkerAnnotation/Name[@Image='UtilityClass']"/>
         </properties>
     </rule>
     <rule ref="category/java/design.xml/CyclomaticComplexity">
