@@ -63,6 +63,7 @@
         <exclude name="NullAssignment"/>
         <exclude name="ShortMethodName"/>
         <exclude name="ShortVariable"/>
+        <exclude name="SwitchDensityRule"/>
         <!-- to enable back when https://github.com/pmd/pmd/issues/4813 is fixed-->
         <exclude name="SwitchStmtsShouldHaveDefault"/>
         <exclude name="TooFewBranchesForASwitchStatement"/>
