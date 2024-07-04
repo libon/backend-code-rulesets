@@ -22,6 +22,7 @@
         <!-- rule NonComparableMapKeys deactivated as we can't easily restrict it to our packages.
         To reactivate in pmd 7.0.0 as each node will have a getRoot method which will return package name -->
         <exclude name="NonComparableMapKeys"/>
+        <exclude name="SwitchDensityRule"/>
     </rule>
     <rule ref="https://raw.githubusercontent.com/jborgers/PMD-jPinpoint-rules/44375f0e771757ad0798d2e6947d3aa37ef69d3d/rulesets/java/jpinpoint-rules.xml/LimitStatementsInLambdas">
         <properties>
@@ -63,7 +64,6 @@
         <exclude name="NullAssignment"/>
         <exclude name="ShortMethodName"/>
         <exclude name="ShortVariable"/>
-        <exclude name="SwitchDensityRule"/>
         <!-- to enable back when https://github.com/pmd/pmd/issues/4813 is fixed-->
         <exclude name="SwitchStmtsShouldHaveDefault"/>
         <exclude name="TooFewBranchesForASwitchStatement"/>
