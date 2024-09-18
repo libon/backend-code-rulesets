@@ -4,39 +4,7 @@
          xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
     <description>A dedicated ruleset for backend projects</description>
 
-    <rule ref="https://raw.githubusercontent.com/jborgers/PMD-jPinpoint-rules/44375f0e771757ad0798d2e6947d3aa37ef69d3d/rulesets/java/jpinpoint-rules.xml">
-        <exclude name="AvoidExposingMutableRecordState"/>
-        <exclude name="UsingSuppressWarnings"/>
-        <exclude name="AvoidHardcodedConnectionConfig"/>
-        <exclude name="AvoidForEachInStreams"/>
-        <exclude name="LimitStatementsInLambdas"/>
-        <!-- rule present in another ruleset and better implemented there -->
-        <exclude name="LetFieldsMeetSerializable"/>
-        <!-- need to tweak rule to exclude case when its level info -->
-        <exclude name="UnconditionalOperationOnLogArgument"/>
-        <!-- rules below fails du to missing exclusions on lombok annotations, deactivated until tweaked -->
-        <exclude name="AvoidNonPrivateFieldsInSharedObjects"/>
-        <exclude name="AvoidUnguardedMutableFieldsInSharedObjects"/>
-        <!-- rule AvoidModifyingObjectMapper is sufficient for us -->
-        <exclude name="AvoidObjectMapperAsField"/>
-        <!-- rule NonComparableMapKeys deactivated as we can't easily restrict it to our packages.
-        To reactivate in pmd 7.0.0 as each node will have a getRoot method which will return package name -->
-        <exclude name="NonComparableMapKeys"/>
-    </rule>
-    <rule ref="https://raw.githubusercontent.com/jborgers/PMD-jPinpoint-rules/44375f0e771757ad0798d2e6947d3aa37ef69d3d/rulesets/java/jpinpoint-rules.xml/LimitStatementsInLambdas">
-        <properties>
-            <!-- increase statement numbers allowed in lambdas -->
-            <property name="param-max" value="15"/>
-        </properties>
-    </rule>
-    <rule ref="https://raw.githubusercontent.com/jborgers/PMD-jPinpoint-rules/44375f0e771757ad0798d2e6947d3aa37ef69d3d/rulesets/java/jpinpoint-rules.xml/AvoidHardcodedConnectionConfig">
-        <properties>
-            <!--Ignore AvoidHardcodedConnectionConfig on classes where the class name ends with IT or Test-->
-            <property name="violationSuppressXPath"
-                      value="//ClassOrInterfaceDeclaration[matches(@SimpleName,'^[A-Z][a-zA-Z0-9_]+(Test|IT)(s|Case)?$')]"/>
-        </properties>
-    </rule>
-    <rule ref="https://raw.githubusercontent.com/libon/backend-code-rulesets/tweaks-for-pmd-7.0.0/pmd/rulesets/arch4u-ruleset-tweaked.xml">
+    <rule ref="https://raw.githubusercontent.com/libon/backend-code-rulesets/pmd7/pmd/rulesets/arch4u-ruleset-tweaked.xml">
         <!-- Too many false positive, as rule doesn't take object creation with interator derived objects into consideration-->
         <exclude name="AvoidInstantiatingObjectsInLoops"/>
         <exclude name="AvoidFieldNameMatchingMethodName"/>
@@ -205,7 +173,7 @@
     <rule name="TooManyMethods"
           language="java"
           since="4.2"
-          class="net.sourceforge.pmd.lang.rule.XPathRule"
+          class="net.sourceforge.pmd.lang.rule.xpath.XPathRule"
           message="This class has too many methods, consider refactoring it."
           externalInfoUrl="${pmd.website.baseurl}/pmd_rules_java_design.html#toomanymethods">
         <!--tweak to exclude test methods that start with should or ends with Test -->
