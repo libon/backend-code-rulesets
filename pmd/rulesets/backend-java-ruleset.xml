@@ -42,6 +42,7 @@
         <exclude name="UncommentedEmptyConstructor"/>
         <exclude name="UnnecessaryFullyQualifiedName"/>
         <exclude name="UnusedPrivateMethod"/>
+        <exclude name="UseExplicitTypes"/>
         <exclude name="UseLocaleWithCaseConversions"/>
         <exclude name="UseUnderscoresInNumericLiterals"/>
     </rule>
