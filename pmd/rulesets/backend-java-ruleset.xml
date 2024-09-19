@@ -8,8 +8,6 @@
         <!-- Too many false positive, as rule doesn't take object creation with interator derived objects into consideration-->
         <exclude name="AvoidInstantiatingObjectsInLoops"/>
         <exclude name="AvoidFieldNameMatchingMethodName"/>
-        <!-- UselessParentheses to reactivate in pmd 7.0.0 when it will have property ignoreClarifying-->
-        <exclude name="UselessParentheses"/>
         <exclude name="ClassNamingConventions"/>
         <exclude name="CloseResource"/>
         <exclude name="CommentDefaultAccessModifier"/>
