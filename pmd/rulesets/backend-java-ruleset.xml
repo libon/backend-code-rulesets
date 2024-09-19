@@ -51,7 +51,7 @@
         <properties>
             <property name="ignoredAnnotations" value="java.lang.Deprecated,jakarta.validation.constraints.AssertTrue"/>
             <property name="violationSuppressXPath"
-                      value="//ClassOrInterfaceDeclaration//Annotation/ClassOrInterfaceType[@SimpleName='PostConstruct']"/>
+                      value="//ClassDeclaration//Annotation/ClassType[@SimpleName='PostConstruct']"/>
         </properties>
     </rule>
 
@@ -100,7 +100,7 @@
         <!-- remove short methods name from rule violation -->
         <properties>
             <property name="violationSuppressXPath"
-                      value="//PrimaryExpression/PrimaryPrefix/Name[contains(@Image,'.') and (3 > string-length(substring-after(@Image,'.')) )]"/>
+                      value="//ExpressionStatement/MethodCall[ (3 > string-length(@MethodName))]"/>
         </properties>
     </rule>
 
@@ -108,8 +108,8 @@
         <!-- remove entities and utility class from rule -->
         <properties>
             <property name="violationSuppressXPath"
-                      value="//TypeDeclaration/Annotation/MarkerAnnotation/Name[@Image='Entity']
-                             | //TypeDeclaration/Annotation/MarkerAnnotation/Name[@Image='UtilityClass']"/>
+                      value="//ClassDeclaration/ModifierList/Annotation[@SimpleName='Entity']
+                             | //ClassDeclaration/ModifierList/Annotation[@SimpleName='UtilityClass']"/>
         </properties>
     </rule>
     <rule ref="category/java/design.xml/CyclomaticComplexity">
@@ -123,7 +123,7 @@
         <!-- exclude constructors from rule -->
         <properties>
             <property name="violationSuppressXPath"
-                      value="//ConstructorDeclaration | //MethodDeclaration//Annotation[@SimpleName = 'Override']"/>
+                      value="//ConstructorDeclaration | //MethodDeclaration/ModifierList/Annotation/ClassType[@SimpleName = 'Override']"/>
         </properties>
     </rule>
     <rule ref="category/java/documentation.xml/UncommentedEmptyConstructor">
@@ -131,7 +131,7 @@
             <!-- ignore empty constructor on model classes as it is needed for Jackson
             and on entity classes as it is needed for hibernate-->
             <property name="violationSuppressXPath"
-                      value="//ClassOrInterfaceDeclaration[matches(@SimpleName,'^[A-Z].*(Entity|Model)$')]"/>
+                      value="//ClassDeclaration[matches(@SimpleName,'^[A-Z].*(Entity|Model)$')]"/>
         </properties>
     </rule>
 
@@ -140,8 +140,8 @@
             <!--Ignore AvoidFieldNameMatchingMethodName on Builders and Test Classes -->
             <!-- Only match other classes when there are getter or setter-->
             <property name="violationSuppressXPath"
-                      value="//ClassOrInterfaceDeclaration[matches(@SimpleName,'^.*Builder$|^[A-Z][a-zA-Z0-9]+(Test|IT)(s|Case)?$')]
-                            | (//ClassOrInterfaceDeclaration/ClassOrInterfaceBody|//EnumDeclaration/EnumBody)[
+                      value="//ClassDeclaration[matches(@SimpleName,'^.*Builder$|^[A-Z][a-zA-Z0-9]+(Test|IT)(s|Case)?$')]
+                            | (//ClassDeclaration/ClassBody|//EnumDeclaration/EnumBody)[
                               count(MethodDeclaration[
                                         starts-with(@Name,'get')
                                         or starts-with(@Name,'set')
@@ -153,15 +153,15 @@
         <properties>
             <!--Ignore CloseResource on Test Classes-->
             <property name="violationSuppressXPath"
-                      value="//ClassOrInterfaceDeclaration[matches(@SimpleName,'^[A-Z][a-zA-Z0-9_]+(Test|IT)(s|Case)?$')]"/>
+                      value="//ClassDeclaration[matches(@SimpleName,'^[A-Z][a-zA-Z0-9_]+(Test|IT)(s|Case)?$')]"/>
         </properties>
     </rule>
     <rule ref="category/java/errorprone.xml/ConstructorCallsOverridableMethod">
         <properties>
             <!--Ignore Rule when suppress warning is set or if class extends, or on entities (due to hibernate exception) -->
             <property name="violationSuppressXPath"
-                      value="//ConstructorDeclaration//Annotation[@SimpleName ='SuppressWarnings']//MemberValuePair/StringLiteral[@ConstValue = 'this-escape']
-                             | //ClassOrInterfaceDeclaration/ExtendsList//ClassOrInterfaceType[@SimpleName = 'ResourceConfig']
+                      value="//ConstructorDeclaration/ModifierList/Annotation[@SimpleName ='SuppressWarnings']/AnnotationMemberList/MemberValuePair/StringLiteral[contains(@Image,'this-escape')]
+                             | //ClassDeclaration/ExtendsList//ClassType[@SimpleName = 'ResourceConfig']
                              | //ClassDeclaration/ModifierList/Annotation[@SimpleName='Entity']"/>
         </properties>
     </rule>
@@ -189,7 +189,7 @@
             <property name="xpath">
                 <value>
                     <![CDATA[
- //ClassOrInterfaceDeclaration/ClassOrInterfaceBody
+ //ClassDeclaration/ClassBody
      [
       count(MethodDeclaration[
          not (
@@ -210,7 +210,7 @@
         <properties>
             <!--Ignore AvoidHardcodedConnectionConfig on classes where the class name ends with IT or Test-->
             <property name="violationSuppressXPath"
-                      value="//ClassOrInterfaceDeclaration[matches(@SimpleName,'^[A-Z][a-zA-Z0-9_]+(Test|IT)(s|Case)?$')]"/>
+                      value="//ClassDeclaration[matches(@SimpleName,'^[A-Z][a-zA-Z0-9_]+(Test|IT)(s|Case)?$')]"/>
         </properties>
     </rule>
     <rule ref="category/java/performance.xml/TooFewBranchesForASwitchStatement">

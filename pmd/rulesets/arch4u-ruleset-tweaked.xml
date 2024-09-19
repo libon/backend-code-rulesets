@@ -29,7 +29,7 @@
                 <value>
                     <![CDATA[
                 //
-                (Type/ReferenceType | AllocationExpression)/ClassOrInterfaceType
+                (Type/ReferenceType | AllocationExpression)/ClassType
                 [pmd-java:typeIs('com.fasterxml.jackson.databind.ObjectMapper')]
                 [not(
                     ancestor::FieldDeclaration
@@ -100,15 +100,15 @@
           [not(
           ./ClassOrInterfaceBody/ClassOrInterfaceBodyDeclaration/ConstructorDeclaration[@Public=true()]
           /FormalParameters[
-              (./FormalParameter[1]/Type/ReferenceType/ClassOrInterfaceType[pmd-java:typeIsExactly('java.lang.Throwable')]
+              (./FormalParameter[1]/Type/ReferenceType/ClassType[pmd-java:typeIsExactly('java.lang.Throwable')]
               and
-              ./FormalParameter[2]/Type/ReferenceType/ClassOrInterfaceType[pmd-java:typeIs('java.lang.String')]
+              ./FormalParameter[2]/Type/ReferenceType/ClassType[pmd-java:typeIs('java.lang.String')]
               and
-              ./FormalParameter[3][@Varargs=true()]/Type/ReferenceType/ClassOrInterfaceType[pmd-java:typeIsExactly('java.lang.Object')])
+              ./FormalParameter[3][@Varargs=true()]/Type/ReferenceType/ClassType[pmd-java:typeIsExactly('java.lang.Object')])
               or
-              (./FormalParameter[1]/Type/ReferenceType/ClassOrInterfaceType[pmd-java:typeIs('java.lang.String')]
+              (./FormalParameter[1]/Type/ReferenceType/ClassType[pmd-java:typeIs('java.lang.String')]
               and
-              ./FormalParameter[2][@Varargs=true()]/Type/ReferenceType/ClassOrInterfaceType[pmd-java:typeIsExactly('java.lang.Object')])]
+              ./FormalParameter[2][@Varargs=true()]/Type/ReferenceType/ClassType[pmd-java:typeIsExactly('java.lang.Object')])]
           )]
           ]]>
                 </value>
@@ -125,7 +125,7 @@
     <rule ref="category/java/bestpractices.xml/UnusedPrivateMethod">
         <properties>
             <property name="violationSuppressXPath"
-                      value="//ClassOrInterfaceDeclaration//Annotation/ClassOrInterfaceType[@SimpleName='PostConstruct']"/>
+                      value="//ClassOrInterfaceDeclaration//Annotation/ClassType[@SimpleName='PostConstruct']"/>
         </properties>
     </rule>
     <rule ref="category/java/bestpractices.xml/JUnitAssertionsShouldIncludeMessage">
@@ -184,13 +184,13 @@
     <rule ref="category/java/design.xml/UseUtilityClass">
         <properties>
             <property name="violationSuppressXPath"
-                      value="//ClassOrInterfaceDeclaration//Annotation/ClassOrInterfaceType[@SimpleName='SpringBootApplication']"/>
+                      value="//ClassDeclaration/ModifierList/Annotation[@SimpleName='SpringBootApplication']"/>
         </properties>
     </rule>
     <rule ref="category/java/design.xml/ImmutableField">
         <properties>
             <property name="violationSuppressXPath"
-                      value="//ClassOrInterfaceDeclaration//Annotation/ClassOrInterfaceType[@SimpleName='Entity' or @SimpleName='MappedSuperclass' ]"/>
+                      value="//ClassDeclaration/ModifierList/Annotation[@SimpleName='Entity' or @SimpleName='MappedSuperclass']"/>
         </properties>
     </rule>
     <rule ref="category/java/documentation.xml">
