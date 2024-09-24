@@ -38,6 +38,8 @@
         <exclude name="TooManyStaticImports"/>
         <exclude name="TestClassWithoutTestCases"/>
         <exclude name="UncommentedEmptyConstructor"/>
+        <!-- false positive on cast in lambda to enable back when https://github.com/pmd/pmd/issues/5073 is fixed -->
+        <exclude name="UnnecessaryCast"/>
         <exclude name="UnnecessaryFullyQualifiedName"/>
         <exclude name="UnusedPrivateMethod"/>
         <exclude name="UseExplicitTypes"/>
