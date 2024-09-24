@@ -16,6 +16,7 @@
         <exclude name="CyclomaticComplexity"/>
         <exclude name="DataClass"/>
         <exclude name="DoNotUseThreads"/>
+        <exclude name="EmptyCatchBlock"/>
         <exclude name="ExcessiveParameterList"/>
         <exclude name="GenericsNaming"/>
         <exclude name="JUnitAssertionsShouldIncludeMessage"/>
@@ -165,6 +166,13 @@
                              | //ClassDeclaration/ModifierList/Annotation[@SimpleName='Entity']"/>
         </properties>
     </rule>
+    <rule ref="category/java/errorprone.xml/EmptyCatchBlock">
+        <properties>
+            <property name="allowCommentedBlocks" value="true"/>
+            <property name="allowExceptionNameRegex" value="^(ignored|expected)$"/>
+        </properties>
+    </rule>
+
     <rule ref="category/java/errorprone.xml/TestClassWithoutTestCases">
         <properties>
             <property name="testClassPattern" value="^[A-Z][a-zA-Z0-9_]+(Test|IT)(s|Case)?$"/>
