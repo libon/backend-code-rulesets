@@ -128,7 +128,7 @@
                       value="//ClassOrInterfaceDeclaration//Annotation/ClassType[@SimpleName='PostConstruct']"/>
         </properties>
     </rule>
-    <rule ref="category/java/bestpractices.xml/JUnitAssertionsShouldIncludeMessage">
+    <rule ref="category/java/bestpractices.xml/UnitTestAssertionsShouldIncludeMessage">
         <properties>
             <property name="violationSuppressXPath" value=".[ends-with(@Image,'assertEquals')]"/>
         </properties>

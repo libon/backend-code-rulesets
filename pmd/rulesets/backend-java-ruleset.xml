@@ -20,7 +20,8 @@
         <exclude name="ExcessiveParameterList"/>
         <exclude name="GenericsNaming"/>
         <exclude name="JUnitAssertionsShouldIncludeMessage"/>
-        <exclude name="JUnitTestContainsTooManyAsserts"/>
+        <exclude name="UnitTestAssertionsShouldIncludeMessage"/>
+        <exclude name="UnitTestContainsTooManyAsserts"/>
         <exclude name="LocalVariableCouldBeFinal"/>
         <exclude name="LooseCoupling"/>
         <exclude name="LongVariable"/>
@@ -30,11 +31,6 @@
         <exclude name="NullAssignment"/>
         <exclude name="ShortMethodName"/>
         <exclude name="ShortVariable"/>
-        <!-- to enable back when https://github.com/pmd/pmd/issues/5030 is fixed -->
-        <exclude name="SwitchDensity"/>
-        <!-- to enable back when https://github.com/pmd/pmd/issues/4813 is fixed-->
-        <exclude name="SwitchStmtsShouldHaveDefault"/>
-        <exclude name="TooFewBranchesForASwitchStatement"/>
         <exclude name="TooManyMethods"/>
         <exclude name="TooManyStaticImports"/>
         <exclude name="TestClassWithoutTestCases"/>
@@ -221,7 +217,7 @@
                       value="//ClassDeclaration[matches(@SimpleName,'^[A-Z][a-zA-Z0-9_]+(Test|IT)(s|Case)?$')]"/>
         </properties>
     </rule>
-    <rule ref="category/java/performance.xml/TooFewBranchesForASwitchStatement">
+    <rule ref="category/java/performance.xml/TooFewBranchesForSwitch">
         <properties>
             <property name="minimumNumberCaseForASwitch" value="2"/>
         </properties>
