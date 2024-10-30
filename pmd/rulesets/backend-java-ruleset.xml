@@ -4,44 +4,10 @@
          xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
     <description>A dedicated ruleset for backend projects</description>
 
-    <rule ref="https://raw.githubusercontent.com/jborgers/PMD-jPinpoint-rules/44375f0e771757ad0798d2e6947d3aa37ef69d3d/rulesets/java/jpinpoint-rules.xml">
-        <exclude name="AvoidExposingMutableRecordState"/>
-        <exclude name="UsingSuppressWarnings"/>
-        <exclude name="AvoidHardcodedConnectionConfig"/>
-        <exclude name="AvoidForEachInStreams"/>
-        <exclude name="LimitStatementsInLambdas"/>
-        <!-- rule present in another ruleset and better implemented there -->
-        <exclude name="LetFieldsMeetSerializable"/>
-        <!-- need to tweak rule to exclude case when its level info -->
-        <exclude name="UnconditionalOperationOnLogArgument"/>
-        <!-- rules below fails du to missing exclusions on lombok annotations, deactivated until tweaked -->
-        <exclude name="AvoidNonPrivateFieldsInSharedObjects"/>
-        <exclude name="AvoidUnguardedMutableFieldsInSharedObjects"/>
-        <!-- rule AvoidModifyingObjectMapper is sufficient for us -->
-        <exclude name="AvoidObjectMapperAsField"/>
-        <!-- rule NonComparableMapKeys deactivated as we can't easily restrict it to our packages.
-        To reactivate in pmd 7.0.0 as each node will have a getRoot method which will return package name -->
-        <exclude name="NonComparableMapKeys"/>
-    </rule>
-    <rule ref="https://raw.githubusercontent.com/jborgers/PMD-jPinpoint-rules/44375f0e771757ad0798d2e6947d3aa37ef69d3d/rulesets/java/jpinpoint-rules.xml/LimitStatementsInLambdas">
-        <properties>
-            <!-- increase statement numbers allowed in lambdas -->
-            <property name="param-max" value="15"/>
-        </properties>
-    </rule>
-    <rule ref="https://raw.githubusercontent.com/jborgers/PMD-jPinpoint-rules/44375f0e771757ad0798d2e6947d3aa37ef69d3d/rulesets/java/jpinpoint-rules.xml/AvoidHardcodedConnectionConfig">
-        <properties>
-            <!--Ignore AvoidHardcodedConnectionConfig on classes where the class name ends with IT or Test-->
-            <property name="violationSuppressXPath"
-                      value="//ClassOrInterfaceDeclaration[matches(@SimpleName,'^[A-Z][a-zA-Z0-9_]+(Test|IT)(s|Case)?$')]"/>
-        </properties>
-    </rule>
-    <rule ref="https://raw.githubusercontent.com/libon/backend-code-rulesets/tweaks-for-pmd-7.0.0/pmd/rulesets/arch4u-ruleset-tweaked.xml">
+    <rule ref="https://raw.githubusercontent.com/libon/backend-code-rulesets/main/pmd/rulesets/arch4u-ruleset-tweaked.xml">
+        <exclude name="AvoidFieldNameMatchingMethodName"/>
         <!-- Too many false positive, as rule doesn't take object creation with interator derived objects into consideration-->
         <exclude name="AvoidInstantiatingObjectsInLoops"/>
-        <exclude name="AvoidFieldNameMatchingMethodName"/>
-        <!-- UselessParentheses to reactivate in pmd 7.0.0 when it will have property ignoreClarifying-->
-        <exclude name="UselessParentheses"/>
         <exclude name="ClassNamingConventions"/>
         <exclude name="CloseResource"/>
         <exclude name="CommentDefaultAccessModifier"/>
@@ -50,30 +16,31 @@
         <exclude name="CyclomaticComplexity"/>
         <exclude name="DataClass"/>
         <exclude name="DoNotUseThreads"/>
+        <exclude name="EmptyCatchBlock"/>
         <exclude name="ExcessiveParameterList"/>
         <exclude name="GenericsNaming"/>
-        <exclude name="JUnitAssertionsShouldIncludeMessage"/>
-        <exclude name="JUnitTestContainsTooManyAsserts"/>
         <exclude name="LocalVariableCouldBeFinal"/>
-        <exclude name="LooseCoupling"/>
         <exclude name="LongVariable"/>
+        <exclude name="LooseCoupling"/>
         <exclude name="MethodArgumentCouldBeFinal"/>
         <exclude name="MethodNamingConventions"/>
         <exclude name="NonSerializableClass"/>
         <exclude name="NullAssignment"/>
+        <exclude name="PrematureDeclaration"/>
         <exclude name="ShortMethodName"/>
         <exclude name="ShortVariable"/>
-        <!-- to enable back when https://github.com/pmd/pmd/issues/5030 is fixed -->
-        <exclude name="SwitchDensity"/>
-        <!-- to enable back when https://github.com/pmd/pmd/issues/4813 is fixed-->
-        <exclude name="SwitchStmtsShouldHaveDefault"/>
-        <exclude name="TooFewBranchesForASwitchStatement"/>
+        <exclude name="TestClassWithoutTestCases"/>
         <exclude name="TooManyMethods"/>
         <exclude name="TooManyStaticImports"/>
-        <exclude name="TestClassWithoutTestCases"/>
         <exclude name="UncommentedEmptyConstructor"/>
+        <!-- false positive on cast in lambda to enable back when https://github.com/pmd/pmd/issues/5073 is fixed -->
+        <exclude name="UnnecessaryCast"/>
         <exclude name="UnnecessaryFullyQualifiedName"/>
+        <exclude name="UnitTestAssertionsShouldIncludeMessage"/>
+        <exclude name="UnitTestContainsTooManyAsserts"/>
+
         <exclude name="UnusedPrivateMethod"/>
+        <exclude name="UseExplicitTypes"/>
         <exclude name="UseLocaleWithCaseConversions"/>
         <exclude name="UseUnderscoresInNumericLiterals"/>
     </rule>
@@ -82,7 +49,7 @@
         <properties>
             <property name="ignoredAnnotations" value="java.lang.Deprecated,jakarta.validation.constraints.AssertTrue"/>
             <property name="violationSuppressXPath"
-                      value="//ClassOrInterfaceDeclaration//Annotation/ClassOrInterfaceType[@SimpleName='PostConstruct']"/>
+                      value="//ClassDeclaration//Annotation/ClassType[@SimpleName='PostConstruct']"/>
         </properties>
     </rule>
 
@@ -124,14 +91,14 @@
         <!-- tweak to ignore some valid short variable names -->
         <properties>
             <property name="violationSuppressRegex"
-                      value="(?i)Avoid variables with short names like (id|ids|os)"/>
+                      value="(?i)Avoid variables with short names like (id|ids|os|OK)"/>
         </properties>
     </rule>
     <rule ref="category/java/codestyle.xml/UnnecessaryFullyQualifiedName">
         <!-- remove short methods name from rule violation -->
         <properties>
             <property name="violationSuppressXPath"
-                      value="//PrimaryExpression/PrimaryPrefix/Name[contains(@Image,'.') and (3 > string-length(substring-after(@Image,'.')) )]"/>
+                      value="//ExpressionStatement/MethodCall[ (3 > string-length(@MethodName))]"/>
         </properties>
     </rule>
 
@@ -139,8 +106,8 @@
         <!-- remove entities and utility class from rule -->
         <properties>
             <property name="violationSuppressXPath"
-                      value="//TypeDeclaration/Annotation/MarkerAnnotation/Name[@Image='Entity']
-                             | //TypeDeclaration/Annotation/MarkerAnnotation/Name[@Image='UtilityClass']"/>
+                      value="//ClassDeclaration/ModifierList/Annotation[@SimpleName='Entity']
+                             | //ClassDeclaration/ModifierList/Annotation[@SimpleName='UtilityClass']"/>
         </properties>
     </rule>
     <rule ref="category/java/design.xml/CyclomaticComplexity">
@@ -154,7 +121,7 @@
         <!-- exclude constructors from rule -->
         <properties>
             <property name="violationSuppressXPath"
-                      value="//ConstructorDeclaration | //MethodDeclaration//Annotation[@SimpleName = 'Override']"/>
+                      value="//ConstructorDeclaration | //MethodDeclaration/ModifierList/Annotation/ClassType[@SimpleName = 'Override']"/>
         </properties>
     </rule>
     <rule ref="category/java/documentation.xml/UncommentedEmptyConstructor">
@@ -162,7 +129,7 @@
             <!-- ignore empty constructor on model classes as it is needed for Jackson
             and on entity classes as it is needed for hibernate-->
             <property name="violationSuppressXPath"
-                      value="//ClassOrInterfaceDeclaration[matches(@SimpleName,'^[A-Z].*(Entity|Model)$')]"/>
+                      value="//ClassDeclaration[matches(@SimpleName,'^[A-Z].*(Entity|Model)$')]"/>
         </properties>
     </rule>
 
@@ -171,8 +138,8 @@
             <!--Ignore AvoidFieldNameMatchingMethodName on Builders and Test Classes -->
             <!-- Only match other classes when there are getter or setter-->
             <property name="violationSuppressXPath"
-                      value="//ClassOrInterfaceDeclaration[matches(@SimpleName,'^.*Builder$|^[A-Z][a-zA-Z0-9]+(Test|IT)(s|Case)?$')]
-                            | (//ClassOrInterfaceDeclaration/ClassOrInterfaceBody|//EnumDeclaration/EnumBody)[
+                      value="//ClassDeclaration[matches(@SimpleName,'^.*Builder$|^[A-Z][a-zA-Z0-9]+(Test|IT)(s|Case)?$')]
+                            | (//ClassDeclaration/ClassBody|//EnumDeclaration/EnumBody)[
                               count(MethodDeclaration[
                                         starts-with(@Name,'get')
                                         or starts-with(@Name,'set')
@@ -184,18 +151,25 @@
         <properties>
             <!--Ignore CloseResource on Test Classes-->
             <property name="violationSuppressXPath"
-                      value="//ClassOrInterfaceDeclaration[matches(@SimpleName,'^[A-Z][a-zA-Z0-9_]+(Test|IT)(s|Case)?$')]"/>
+                      value="//ClassDeclaration[matches(@SimpleName,'^[A-Z][a-zA-Z0-9_]+(Test|IT)(s|Case)?$')]"/>
         </properties>
     </rule>
     <rule ref="category/java/errorprone.xml/ConstructorCallsOverridableMethod">
         <properties>
             <!--Ignore Rule when suppress warning is set or if class extends, or on entities (due to hibernate exception) -->
             <property name="violationSuppressXPath"
-                      value="//ConstructorDeclaration//Annotation[@SimpleName ='SuppressWarnings']//MemberValuePair/StringLiteral[@ConstValue = 'this-escape']
-                             | //ClassOrInterfaceDeclaration/ExtendsList//ClassOrInterfaceType[@SimpleName = 'ResourceConfig']
+                      value="//ConstructorDeclaration/ModifierList/Annotation[@SimpleName ='SuppressWarnings']/AnnotationMemberList/MemberValuePair/StringLiteral[contains(@Image,'this-escape')]
+                             | //ClassDeclaration/ExtendsList//ClassType[@SimpleName = 'ResourceConfig']
                              | //ClassDeclaration/ModifierList/Annotation[@SimpleName='Entity']"/>
         </properties>
     </rule>
+    <rule ref="category/java/errorprone.xml/EmptyCatchBlock">
+        <properties>
+            <property name="allowCommentedBlocks" value="true"/>
+            <property name="allowExceptionNameRegex" value="^(ignored|expected)$"/>
+        </properties>
+    </rule>
+
     <rule ref="category/java/errorprone.xml/TestClassWithoutTestCases">
         <properties>
             <property name="testClassPattern" value="^[A-Z][a-zA-Z0-9_]+(Test|IT)(s|Case)?$"/>
@@ -205,7 +179,7 @@
     <rule name="TooManyMethods"
           language="java"
           since="4.2"
-          class="net.sourceforge.pmd.lang.rule.XPathRule"
+          class="net.sourceforge.pmd.lang.rule.xpath.XPathRule"
           message="This class has too many methods, consider refactoring it."
           externalInfoUrl="${pmd.website.baseurl}/pmd_rules_java_design.html#toomanymethods">
         <!--tweak to exclude test methods that start with should or ends with Test -->
@@ -220,7 +194,7 @@
             <property name="xpath">
                 <value>
                     <![CDATA[
- //ClassOrInterfaceDeclaration/ClassOrInterfaceBody
+ //ClassDeclaration/ClassBody
      [
       count(MethodDeclaration[
          not (
@@ -241,12 +215,34 @@
         <properties>
             <!--Ignore AvoidHardcodedConnectionConfig on classes where the class name ends with IT or Test-->
             <property name="violationSuppressXPath"
-                      value="//ClassOrInterfaceDeclaration[matches(@SimpleName,'^[A-Z][a-zA-Z0-9_]+(Test|IT)(s|Case)?$')]"/>
+                      value="//ClassDeclaration[matches(@SimpleName,'^[A-Z][a-zA-Z0-9_]+(Test|IT)(s|Case)?$')]"/>
         </properties>
     </rule>
-    <rule ref="category/java/performance.xml/TooFewBranchesForASwitchStatement">
+    <rule ref="category/java/performance.xml/TooFewBranchesForSwitch">
         <properties>
             <property name="minimumNumberCaseForASwitch" value="2"/>
+        </properties>
+    </rule>
+
+    <rule name="AvoidJpaRepositoryInRepositoryInterface"
+          language="java"
+          message="Interfaces annotated with @Repository should extend LibonJpaRepository instead of JpaRepository."
+          class="net.sourceforge.pmd.lang.rule.xpath.XPathRule">
+        <description>
+            Detects interfaces annotated with @Repository that extend JpaRepository, advising the use of
+            LibonJpaRepository.
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+                //ClassDeclaration[@Interface=true()]
+                                    [.//Annotation[@SimpleName='Repository']]
+                                    [.//ExtendsList/ClassType[@SimpleName='JpaRepository']]
+                ]]>
+                </value>
+            </property>
         </properties>
     </rule>
 </ruleset>
