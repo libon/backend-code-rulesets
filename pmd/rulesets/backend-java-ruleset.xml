@@ -224,4 +224,26 @@
             <property name="minimumNumberCaseForASwitch" value="2"/>
         </properties>
     </rule>
+
+    <rule name="AvoidJpaRepositoryInRepositoryInterface"
+          language="java"
+          message="Interfaces annotated with @Repository should extend LibonJpaRepository instead of JpaRepository."
+          class="net.sourceforge.pmd.lang.rule.xpath.XPathRule">
+        <description>
+            Detects interfaces annotated with @Repository that extend JpaRepository, advising the use of
+            LibonJpaRepository.
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+                //ClassDeclaration[@Interface=true()]
+                                    [.//Annotation[@SimpleName='Repository']]
+                                    [.//ExtendsList/ClassType[@SimpleName='JpaRepository']]
+                ]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
 </ruleset>
