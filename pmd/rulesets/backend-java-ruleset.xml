@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
     <description>A dedicated ruleset for backend projects</description>
 
-    <rule ref="https://raw.githubusercontent.com/libon/backend-code-rulesets/pmd7/pmd/rulesets/arch4u-ruleset-tweaked.xml">
+    <rule ref="https://raw.githubusercontent.com/libon/backend-code-rulesets/main/pmd/rulesets/arch4u-ruleset-tweaked.xml">
         <exclude name="AvoidFieldNameMatchingMethodName"/>
         <!-- Too many false positive, as rule doesn't take object creation with interator derived objects into consideration-->
         <exclude name="AvoidInstantiatingObjectsInLoops"/>
@@ -19,7 +19,6 @@
         <exclude name="EmptyCatchBlock"/>
         <exclude name="ExcessiveParameterList"/>
         <exclude name="GenericsNaming"/>
-        <exclude name="JUnitAssertionsShouldIncludeMessage"/>
         <exclude name="LocalVariableCouldBeFinal"/>
         <exclude name="LongVariable"/>
         <exclude name="LooseCoupling"/>
