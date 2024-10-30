@@ -19,7 +19,6 @@
         <exclude name="EmptyCatchBlock"/>
         <exclude name="ExcessiveParameterList"/>
         <exclude name="GenericsNaming"/>
-        <exclude name="JUnitAssertionsShouldIncludeMessage"/>
         <exclude name="LocalVariableCouldBeFinal"/>
         <exclude name="LongVariable"/>
         <exclude name="LooseCoupling"/>
