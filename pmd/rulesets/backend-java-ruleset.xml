@@ -226,10 +226,10 @@
 
     <rule name="AvoidJpaRepositoryInRepositoryInterface"
           language="java"
-          message="Interfaces annotated with @Repository should extend LibonJpaRepository instead of JpaRepository."
+          message="Interfaces annotated with `@Repository` should extend LibonJpaRepository instead of JpaRepository."
           class="net.sourceforge.pmd.lang.rule.xpath.XPathRule">
         <description>
-            Detects interfaces annotated with @Repository that extend JpaRepository, advising the use of
+            Detects interfaces annotated with `@Repository` that extend JpaRepository, advising the use of
             LibonJpaRepository.
         </description>
         <priority>3</priority>
