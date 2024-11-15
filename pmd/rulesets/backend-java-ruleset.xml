@@ -29,6 +29,7 @@
         <exclude name="PrematureDeclaration"/>
         <exclude name="ShortMethodName"/>
         <exclude name="ShortVariable"/>
+        <exclude name="SimplifyBooleanReturns"/>
         <exclude name="TestClassWithoutTestCases"/>
         <exclude name="TooManyMethods"/>
         <exclude name="TooManyStaticImports"/>
