@@ -232,7 +232,7 @@
             Detects interfaces annotated with `@Repository` that extend JpaRepository, advising the use of
             LibonJpaRepository.
         </description>
-        <priority>3</priority>
+        <priority>1</priority>
         <properties>
             <property name="xpath">
                 <value>
@@ -240,6 +240,25 @@
                 //ClassDeclaration[@Interface=true()]
                                     [.//Annotation[@SimpleName='Repository']]
                                     [.//ExtendsList/ClassType[@SimpleName='JpaRepository']]
+                ]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+    <rule name="AvoidTransactionalOnClassLevel"
+          language="java"
+          message="We should not use @Transactional on class level, use it on method level instead."
+          class="net.sourceforge.pmd.lang.rule.xpath.XPathRule">
+        <description>
+            Detects classes annotated with `@Transactional`, advising the use of method level annotation because we tend
+            to forget when it's annotated on class.
+        </description>
+        <priority>2</priority>
+        <properties>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+                //ClassDeclaration/ModifierList/Annotation[@SimpleName='Transactional']
                 ]]>
                 </value>
             </property>
