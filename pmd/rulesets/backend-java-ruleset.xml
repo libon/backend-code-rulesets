@@ -213,9 +213,10 @@
     </rule>
     <rule ref="category/java/multithreading.xml/DoNotUseThreads">
         <properties>
-            <!--Ignore AvoidHardcodedConnectionConfig on classes where the class name ends with IT or Test-->
+            <!--Ignore this rule on test related classes-->
             <property name="violationSuppressXPath"
-                      value="//ClassDeclaration[matches(@SimpleName,'^[A-Z][a-zA-Z0-9_]+(Test|IT)(s|Case)?$')]"/>
+                      value="//ClassDeclaration[matches(@SimpleName,'^[A-Z][a-zA-Z0-9_]+(Test|IT)(s|Case)?$')]
+                             | /CompilationUnit[contains(@PackageName, 'mock') ]"/>
         </properties>
     </rule>
     <rule ref="category/java/performance.xml/TooFewBranchesForSwitch">
