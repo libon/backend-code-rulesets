@@ -259,7 +259,10 @@
             <property name="xpath">
                 <value>
                     <![CDATA[
-                //ClassDeclaration/ModifierList/Annotation[@SimpleName='Transactional']
+                 //ClassDeclaration[
+                    ./ModifierList/Annotation[@SimpleName='Transactional']
+                    and not(.//Annotation[@SimpleName='Test'])
+                ]
                 ]]>
                 </value>
             </property>
