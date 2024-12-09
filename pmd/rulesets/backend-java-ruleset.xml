@@ -268,4 +268,28 @@
             </property>
         </properties>
     </rule>
+    <rule name="PreventUsageOfOpenMetricsRestrictedSuffixesOnMetricNames"
+          language="java"
+          message="We should not use OpenMetrics restricted suffixes on micrometer metric names. Suffixes are : _count,
+          _sum, _bucket, _total, _created, _gcount, _gsum, _gcreated, _info"
+          class="net.sourceforge.pmd.lang.rule.xpath.XPathRule">
+        <description>
+            OpenMetrics specs restricts the usage of certain suffixes on names. We should avoid using them because
+            micrometer remove them from the metrics names without warnings.
+        </description>
+        <priority>1</priority>
+        <properties>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+                 //FieldDeclaration[pmd-java:modifiers() = ('static', 'final')
+                   and ./ClassType[@SimpleName ='String']
+                   and ./VariableDeclarator/StringLiteral[matches(@ConstValue,'_g?(created|total|count|sum|bucket|info)$')]
+                   and //FieldDeclaration/ClassType[@SimpleName= 'MeterRegistry']
+                   ]
+                ]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
 </ruleset>
