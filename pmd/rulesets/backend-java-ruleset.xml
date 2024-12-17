@@ -18,6 +18,7 @@
         <exclude name="DoNotUseThreads"/>
         <exclude name="EmptyCatchBlock"/>
         <exclude name="ExcessiveParameterList"/>
+        <exclude name="ExcessivePublicCount"/>
         <exclude name="GenericsNaming"/>
         <exclude name="LocalVariableCouldBeFinal"/>
         <exclude name="LongVariable"/>
@@ -124,6 +125,13 @@
                       value="//ConstructorDeclaration | //MethodDeclaration/ModifierList/Annotation/ClassType[@SimpleName = 'Override']"/>
         </properties>
     </rule>
+    <rule ref="category/java/design.xml/ExcessivePublicCount">
+        <properties>
+            <property name="violationSuppressXPath"
+                      value="./*[pmd-java:nodeIs('EnumDeclaration')]"/>
+        </properties>
+    </rule>
+
     <rule ref="category/java/documentation.xml/UncommentedEmptyConstructor">
         <properties>
             <!-- ignore empty constructor on model classes as it is needed for Jackson
