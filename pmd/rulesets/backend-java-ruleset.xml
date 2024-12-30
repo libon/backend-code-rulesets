@@ -25,6 +25,7 @@
         <exclude name="LooseCoupling"/>
         <exclude name="MethodArgumentCouldBeFinal"/>
         <exclude name="MethodNamingConventions"/>
+        <exclude name="MoreThanOneLogger"/>
         <exclude name="NonSerializableClass"/>
         <exclude name="NullAssignment"/>
         <exclude name="PrematureDeclaration"/>
@@ -177,7 +178,13 @@
             <property name="allowExceptionNameRegex" value="^(ignored|expected)$"/>
         </properties>
     </rule>
-
+    <rule ref="category/java/errorprone.xml/MoreThanOneLogger">
+        <properties>
+            <!--Ignore rule when other loggers are specific loggers (i.e. not based on a class name) -->
+            <property name="violationSuppressXPath"
+                      value="//ClassDeclaration/ClassBody[count(.//MethodCall[@MethodName = 'getLogger' and ./ArgumentList/ClassLiteral ]) = 0]"/>
+        </properties>
+    </rule>
     <rule ref="category/java/errorprone.xml/TestClassWithoutTestCases">
         <properties>
             <property name="testClassPattern" value="^[A-Z][a-zA-Z0-9_]+(Test|IT)(s|Case)?$"/>
