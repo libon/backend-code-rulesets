@@ -212,6 +212,7 @@
  //ClassDeclaration/ClassBody
      [
       count(MethodDeclaration[
+          not(@EffectiveVisibility = 'private') and
          not (
                 starts-with(@Name,'get')
                 or starts-with(@Name,'set')
