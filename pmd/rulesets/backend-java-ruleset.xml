@@ -40,11 +40,18 @@
         <exclude name="UnnecessaryFullyQualifiedName"/>
         <exclude name="UnitTestAssertionsShouldIncludeMessage"/>
         <exclude name="UnitTestContainsTooManyAsserts"/>
+        <exclude name="UnitTestShouldIncludeAssert"/>
 
         <exclude name="UnusedPrivateMethod"/>
         <exclude name="UseExplicitTypes"/>
         <exclude name="UseLocaleWithCaseConversions"/>
         <exclude name="UseUnderscoresInNumericLiterals"/>
+    </rule>
+
+    <rule ref="category/java/bestpractices.xml/UnitTestShouldIncludeAssert">
+        <properties>
+            <property name="extraAssertMethodNames" value="verify"/>
+        </properties>
     </rule>
 
     <rule ref="category/java/bestpractices.xml/UnusedPrivateMethod">
