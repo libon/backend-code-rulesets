@@ -315,4 +315,34 @@
             </property>
         </properties>
     </rule>
+
+    <rule name="RestrictConditionalOnPropertyToSpecificValue"
+          language="java"
+          message="@ConditionalOnProperty used without 'havingValue' parameter">
+        <description>
+            We should always restrict activation of a bean to a specific value to avoid enabling it by mistake
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+                 //Annotation[pmd-java:typeIs('org.springframework.boot.autoconfigure.condition.ConditionalOnProperty')]
+                    [not(.//MemberValuePair[@Name='havingValue'])]
+                ]]>
+                </value>
+            </property>
+        </properties>
+        <example>
+            <![CDATA[
+                    // Violation:
+                    @ConditionalOnProperty(name = "feature.enabled")
+                    public class FeatureConfig { }
+
+                    // Correct usage:
+                    @ConditionalOnProperty(name = "feature.enabled", havingValue = "true")
+                    public class FeatureConfig { }
+                ]]>
+        </example>
+    </rule>
 </ruleset>
