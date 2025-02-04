@@ -318,7 +318,8 @@
 
     <rule name="RestrictConditionalOnPropertyToSpecificValue"
           language="java"
-          message="@ConditionalOnProperty used without 'havingValue' parameter">
+          message="@ConditionalOnProperty used without 'havingValue' parameter"
+          class="net.sourceforge.pmd.lang.rule.xpath.XPathRule">
         <description>
             We should always restrict activation of a bean to a specific value to avoid enabling it by mistake
         </description>
