@@ -100,7 +100,7 @@
         <!-- tweak to ignore some valid short variable names -->
         <properties>
             <property name="violationSuppressRegex"
-                      value="(?i)Avoid variables with short names like (id|ids|os|OK)"/>
+                      value="(?i)Avoid variables with short names like (id|ids|os|OK|c4)"/>
         </properties>
     </rule>
     <rule ref="category/java/codestyle.xml/UnnecessaryFullyQualifiedName">
