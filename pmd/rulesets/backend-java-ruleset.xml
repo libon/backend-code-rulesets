@@ -346,4 +346,56 @@
                 ]]>
         </example>
     </rule>
+
+    <rule name="AvoidToStringWithoutOnlyExplicitlyIncludedOnEntity"
+          language="java"
+          message="Entity classes using @ToString should specify onlyExplicitlyIncluded = true to avoid potential issues with relationships."
+          class="net.sourceforge.pmd.lang.rule.xpath.XPathRule">
+        <description>
+            When using Lombok's @ToString on @Entity classes, onlyExplicitlyIncluded = true should be specified to
+            prevent accidental serialization of relationships which can cause performance issues.
+        </description>
+        <priority>2</priority>
+        <properties>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+                //ClassDeclaration[
+                    ./ModifierList/Annotation[pmd-java:typeIs('jakarta.persistence.Entity')
+                                              or pmd-java:typeIs('jakarta.persistence.Embeddable')]
+                    and ./ModifierList/Annotation[pmd-java:typeIs('lombok.ToString')]
+                    and not(./ModifierList/Annotation[pmd-java:typeIs('lombok.ToString')]/AnnotationMemberList/MemberValuePair[
+                        @Name='onlyExplicitlyIncluded']/BooleanLiteral[@True =true()])
+                ]
+                ]]>
+                </value>
+            </property>
+        </properties>
+        <example>
+            <![CDATA[
+        // Violation:
+        @Entity
+        @ToString
+        public class User {
+            @Id
+            private Long id;
+
+            @OneToMany
+            private List<Order> orders;
+        }
+
+        // Correct usage:
+        @Entity
+        @ToString(onlyExplicitlyIncluded = true)
+        public class User {
+            @Id
+            @ToString.Include
+            private Long id;
+
+            @OneToMany
+            private List<Order> orders;
+        }
+        ]]>
+        </example>
+    </rule>
 </ruleset>
