@@ -93,7 +93,7 @@
         <!-- tweak to ignore some valid short method names -->
         <properties>
             <property name="violationSuppressXPath"
-                      value="//MethodDeclaration[matches(@Name, 'id|of')]"/>
+                      value="//MethodDeclaration[matches(@Name, 'id|of|or|ok|on')]"/>
         </properties>
     </rule>
 
