@@ -404,4 +404,33 @@
         ]]>
         </example>
     </rule>
+
+    <rule name="HttpClientExceptionAssertionShouldHaveMessageValidation"
+          language="java"
+          message="Exception assertions with isInstanceOf for children of ClientErrorUncheckedException or ClientErrorException must also call hasMessageContaining()"
+          class="net.sourceforge.pmd.lang.rule.xpath.XPathRule">
+        <description>
+            When asserting exceptions that extend ClientErrorUncheckedException or ClientErrorException, always validate
+            the error message too. This ensures that assertion is validation by the expected reason.
+        </description>
+        <priority>2</priority>
+        <properties>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+                    //MethodCall[
+                        pmd-java:typeIs('org.assertj.core.api.AbstractThrowableAssert') and
+                        @MethodName='isInstanceOf'
+                        and not (descendant::MethodCall[contains(@MethodName, 'hasMessage')]
+                                 or ancestor::MethodCall[contains(@MethodName, 'hasMessage')])
+                        and ./ArgumentList/ClassLiteral/ClassType[
+                            pmd-java:typeIs('com.libon.server.common.business.exception.client.unchecked.ClientErrorUncheckedException')
+                            or pmd-java:typeIs('com.libon.server.common.business.exception.client.ClientErrorException')
+                        ]
+                    ]
+                    ]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
 </ruleset>
