@@ -107,7 +107,7 @@
         <!-- remove short methods name from rule violation -->
         <properties>
             <property name="violationSuppressXPath"
-                      value="//ExpressionStatement/MethodCall[ (3 > string-length(@MethodName))]"/>
+                      value="./MethodCall[ (3 > string-length(@MethodName))]"/>
         </properties>
     </rule>
 
