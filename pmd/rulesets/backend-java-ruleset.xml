@@ -433,4 +433,60 @@
             </property>
         </properties>
     </rule>
+
+    <rule name="AvoidMonetaMoneyUsage"
+          language="java"
+          message="Use com.libon.server.common.monetary.Money instead of org.javamoney.moneta.Money for monetary operations."
+          class="net.sourceforge.pmd.lang.rule.xpath.XPathRule">
+        <description>
+            Detects usage of org.javamoney.moneta.Money which should be avoided in Libon projects.
+            Always use com.libon.server.common.monetary.Money which provides proper handling for monetary operations
+            in the Libon ecosystem.
+        </description>
+        <priority>2</priority>
+        <properties>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+                //ImportDeclaration[
+                    contains(@ImportedName, 'org.javamoney.moneta.Money')
+                ]
+                |
+                //ClassType[
+                    @SimpleName='Money' and
+                    pmd-java:typeIs('org.javamoney.moneta.Money')
+                ]
+                |
+                //MethodCall[
+                    @MethodName='of' and
+                    ../PrimaryPrefix/Name[
+                        contains(@QualifiedName, 'org.javamoney.moneta.Money')
+                    ]
+                ]
+                ]]>
+                </value>
+            </property>
+        </properties>
+        <example>
+            <![CDATA[
+        // Violation:
+        import org.javamoney.moneta.Money;
+
+        class MonetaryOperations {
+            public void processAmount() {
+                Money amount = Money.of(10, "EUR"); // Violation
+            }
+        }
+
+        // Correct usage:
+        import com.libon.server.common.monetary.Money;
+
+        class MonetaryOperations {
+            public void processAmount() {
+                Money amount = Money.of(10, "EUR");
+            }
+        }
+        ]]>
+        </example>
+    </rule>
 </ruleset>
