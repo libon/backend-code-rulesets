@@ -4,7 +4,9 @@
          xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
     <description>A dedicated ruleset for backend projects</description>
 
-    <rule ref="https://raw.githubusercontent.com/libon/backend-code-rulesets/main/pmd/rulesets/arch4u-ruleset-tweaked.xml">
+    <rule ref="https://raw.githubusercontent.com/libon/backend-code-rulesets/refs/heads/update-to-7.21/pmd/rulesets/arch4u-ruleset-tweaked.xml">
+        <!-- To enable back after https://github.com/pmd/pmd/issues/6451 -->
+        <exclude name="AvoidCatchingGenericException"/>
         <exclude name="AvoidFieldNameMatchingMethodName"/>
         <!-- Too many false positive, as rule doesn't take object creation with interator derived objects into consideration-->
         <exclude name="AvoidInstantiatingObjectsInLoops"/>
@@ -20,7 +22,7 @@
         <exclude name="EmptyCatchBlock"/>
         <exclude name="ExcessiveParameterList"/>
         <exclude name="ExcessivePublicCount"/>
-        <exclude name="GenericsNaming"/>
+        <exclude name="TypeParameterNamingConventions"/>
         <exclude name="ImplicitFunctionalInterface"/>
         <exclude name="LocalVariableCouldBeFinal"/>
         <exclude name="LongVariable"/>
@@ -31,6 +33,7 @@
         <exclude name="NonSerializableClass"/>
         <exclude name="NullAssignment"/>
         <exclude name="PrematureDeclaration"/>
+        <exclude name="PublicMemberInNonPublicType"/>
         <exclude name="ShortMethodName"/>
         <exclude name="ShortVariable"/>
         <exclude name="TestClassWithoutTestCases"/>
@@ -488,5 +491,15 @@
         }
         ]]>
         </example>
+    </rule>
+    <rule ref="category/java/design.xml/PublicMemberInNonPublicType">
+        <properties>
+            <!-- allow in case of test classes as we sometimes needs to test on a public inner class -->
+            <property name="violationSuppressXPath"
+                      value="//ClassDeclaration[
+                                matches(@SimpleName,'^[A-Z][a-zA-Z0-9_]+(Test|IT)(s|Case)?$')
+                                or ancestor::ClassDeclaration[matches(@SimpleName,'^[A-Z][a-zA-Z0-9_]+(Test|IT)(s|Case)?$')]
+                            ]"/>
+        </properties>
     </rule>
 </ruleset>
