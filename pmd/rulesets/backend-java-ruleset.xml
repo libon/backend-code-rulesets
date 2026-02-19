@@ -4,6 +4,8 @@
          xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
     <description>A dedicated ruleset for backend projects</description>
 
+    <exclude-pattern>.*/target/generated-sources/.*</exclude-pattern>
+
     <rule ref="https://raw.githubusercontent.com/libon/backend-code-rulesets/refs/heads/update-to-7.21/pmd/rulesets/arch4u-ruleset-tweaked.xml">
         <!-- To enable back after https://github.com/pmd/pmd/issues/6451 -->
         <exclude name="AvoidCatchingGenericException"/>
