@@ -360,7 +360,7 @@
 
     <rule name="AvoidToStringWithoutOnlyExplicitlyIncludedOnEntity"
           language="java"
-          message="Entity classes using @ToString should specify onlyExplicitlyIncluded = true to avoid potential issues with relationships."
+          message="Entity classes using `@ToString` should specify onlyExplicitlyIncluded = true to avoid potential issues with relationships."
           class="net.sourceforge.pmd.lang.rule.xpath.XPathRule">
         <description>
             When using Lombok's @ToString on @Entity classes, onlyExplicitlyIncluded = true should be specified to
@@ -494,6 +494,112 @@
         ]]>
         </example>
     </rule>
+    <rule name="QueryParamShouldBeKebabCase"
+          language="java"
+          message="@QueryParam value ''{0}'' should be kebab-case (e.g. ''my-param'', ''page'', ''v2-name'')."
+          class="net.sourceforge.pmd.lang.rule.xpath.XPathRule">
+        <description>
+            Enforces that all `@QueryParam` values follow kebab-case naming convention.
+            Single lowercase words (e.g. 'page'), hyphenated words (e.g. 'my-param') and numeric
+            segments (e.g. 'v2-name', 'param-1') are all valid. CamelCase, PascalCase and
+            snake_case values are violations.
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+                //Annotation[
+                    pmd-java:typeIs('jakarta.ws.rs.QueryParam')
+                    or pmd-java:typeIs('javax.ws.rs.QueryParam')
+                ]//StringLiteral[
+                    not(matches(@ConstValue, '^[a-z][a-z0-9]*(-[a-z0-9]+)*$'))
+                ]
+                    ]]>
+                </value>
+            </property>
+        </properties>
+        <example>
+            <![CDATA[
+                // Violations:
+                public Response search(@QueryParam("myParam") String myParam) { }       // camelCase
+                public Response search(@QueryParam("my_param") String myParam) { }      // snake_case
+                public Response search(@QueryParam("MyParam") String myParam) { }       // PascalCase
+
+                // Correct usage:
+                public Response search(@QueryParam("page") int page) { }                // single word
+                public Response search(@QueryParam("my-param") String myParam) { }      // kebab-case
+                public Response search(@QueryParam("v2-name") String name) { }          // numeric segment
+                public Response search(@QueryParam("param-1") String param) { }         // trailing number
+            ]]>
+        </example>
+    </rule>
+
+    <rule name="AvoidSpringContextSwitchViaProperties"
+          language="java"
+          message="'properties' on `@SpringBootTest`/`@SpringBootIT` triggers a costly context switch (~40s). Use `@MockitoSpyBean` + doReturn(...) in `@BeforeEach` instead."
+          class="net.sourceforge.pmd.lang.rule.xpath.XPathRule">
+        <description>
+            Detects usage of the 'properties' attribute on `@SpringBootTest` or `@SpringBootIT` annotations.
+            Setting 'properties' forces Spring to create a brand-new application context for the test class,
+            which adds ~40 seconds of startup overhead per unique context and is incompatible with a shared
+            `@EmbeddedKafka` broker across the test suite.
+
+            Prefer overriding configuration property values by declaring a `@MockitoSpyBean` on the relevant
+            `@ConfigurationProperties` class and stubbing the desired value in a `@BeforeEach` method.
+        </description>
+        <priority>2</priority>
+        <properties>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+                //Annotation[
+                    (pmd-java:typeIs('org.springframework.boot.test.context.SpringBootTest')
+                     or @SimpleName = 'SpringBootIT')
+                    and ./AnnotationMemberList/MemberValuePair[
+                        @Name = 'properties'
+                        and (
+                            ./StringLiteral
+                            or ./MemberValueArrayInitializer/StringLiteral
+                        )
+                    ]
+                ]
+                    ]]>
+                </value>
+            </property>
+        </properties>
+        <example>
+            <![CDATA[
+            // Violation — forces a new Spring context, adds ~40s startup time:
+            @SpringBootIT(properties = { "feature.toggle.dps.consume-topup-catalog-updated-topic=true" })
+            class MyFeatureIT { }
+
+            @SpringBootTest(properties = { "feature.toggle.dps.consume-topup-catalog-updated-topic=true" })
+            class MyFeatureTest { }
+
+            // Correct — reuse shared context, stub via spy in @BeforeEach:
+            @SpringBootIT
+            class MyFeatureIT {
+
+                @MockitoSpyBean
+                MyFeatureProperties myFeaturePropertiesSpy;
+
+                @BeforeEach
+                void setUp() {
+                    doReturn(true).when(myFeaturePropertiesSpy).consumeTopupCatalogUpdatedTopic();
+                }
+            }
+
+            // Legitimate exception — property is consumed directly by the Spring infrastructure
+            // (e.g. @ConditionalOnBooleanProperty, @Value injected into a constructor) and cannot be
+            // overridden via a spy after the context is started:
+            @SuppressWarnings("PMD.AvoidSpringContextSwitchViaProperties")
+            @SpringBootIT(properties = { "special-feature.enabled=true" })
+            class SomeIT { }
+            ]]>
+        </example>
+    </rule>
+
     <rule ref="category/java/design.xml/PublicMemberInNonPublicType">
         <properties>
             <!-- allow in case of test classes as we sometimes needs to test on a public inner class -->
