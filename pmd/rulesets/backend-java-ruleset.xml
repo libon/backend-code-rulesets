@@ -327,34 +327,75 @@
         </properties>
     </rule>
 
-    <rule name="RestrictConditionalOnPropertyToSpecificValue"
+    <rule name="UseConditionalOnBooleanPropertyForEnabledProperties"
           language="java"
-          message="@ConditionalOnProperty used without 'havingValue' parameter"
+          message="Prefer ''@ConditionalOnBooleanProperty'' over ''@ConditionalOnProperty'' for ''.enabled'' flags."
           class="net.sourceforge.pmd.lang.rule.xpath.XPathRule">
         <description>
-            We should always restrict activation of a bean to a specific value to avoid enabling it by mistake
+            Detects two patterns on `@ConditionalOnProperty` that should use `@ConditionalOnBooleanProperty` instead:
+
+            1. `name` (or `value`) ends with `.enabled` — regardless of whether `havingValue` is set:
+               - `@ConditionalOnProperty(name = "x.enabled")` — missing `havingValue` is an implicit risk
+               - `@ConditionalOnProperty(name = "x.enabled", havingValue = "true")` — verbose, use the dedicated annotation
+
+            2. `havingValue = "true"` or `havingValue = "false"` is set on any property name — the annotation
+               explicitly checks for a boolean value, which is exactly what `@ConditionalOnBooleanProperty` is
+               designed for (use `havingValue = false` on the latter to negate).
+
+            `@ConditionalOnBooleanProperty` is more explicit: it only activates the bean when the property is
+            `true`, and its name makes the intent immediately clear.
         </description>
         <priority>3</priority>
         <properties>
             <property name="xpath">
                 <value>
                     <![CDATA[
-                 //Annotation[pmd-java:typeIs('org.springframework.boot.autoconfigure.condition.ConditionalOnProperty')]
-                    [not(.//MemberValuePair[@Name='havingValue'])]
-                ]]>
+                //Annotation[pmd-java:typeIs('org.springframework.boot.autoconfigure.condition.ConditionalOnProperty')]
+                [
+                    ./AnnotationMemberList/MemberValuePair[
+                        @Name='name' or @Name='value'
+                    ]/StringLiteral[ends-with(@ConstValue, '.enabled')]
+                    or
+                    ./AnnotationMemberList/MemberValuePair[
+                        @Name='name' or @Name='value'
+                    ]/MemberValueArrayInitializer/StringLiteral[ends-with(@ConstValue, '.enabled')]
+                    or
+                    (not(./AnnotationMemberList) and ./StringLiteral[ends-with(@ConstValue, '.enabled')])
+                    or
+                    ./AnnotationMemberList/MemberValuePair[
+                        @Name='havingValue'
+                    ]/StringLiteral[@ConstValue='true' or @ConstValue='false']
+                ]
+                    ]]>
                 </value>
             </property>
         </properties>
         <example>
             <![CDATA[
-                    // Violation:
-                    @ConditionalOnProperty(name = "feature.enabled")
-                    public class FeatureConfig { }
+                // Violations — name ends with .enabled:
+                @ConditionalOnProperty(name = "benchmark.apis.enabled")
+                public class BenchmarkConfig { }
 
-                    // Correct usage:
-                    @ConditionalOnProperty(name = "feature.enabled", havingValue = "true")
-                    public class FeatureConfig { }
-                ]]>
+                @ConditionalOnProperty(name = "benchmark.apis.enabled", havingValue = "true")
+                public class BenchmarkConfig { }
+
+                // Violation — havingValue = "true" or havingValue = "false" on any property name:
+                @ConditionalOnProperty(name = "oauth.keycloak.active", havingValue = "true")
+                public class KeycloakConfig { }
+
+                @ConditionalOnProperty(name = "oauth.keycloak.active", havingValue = "false")
+                public class KeycloakInactiveConfig { }
+
+                // Correct usage:
+                @ConditionalOnBooleanProperty(name = "benchmark.apis.enabled")
+                public class BenchmarkConfig { }
+
+                @ConditionalOnBooleanProperty(name = "oauth.keycloak.active")
+                public class KeycloakConfig { }
+
+                @ConditionalOnBooleanProperty(name = "oauth.keycloak.active", havingValue = false)
+                public class KeycloakInactiveConfig { }
+            ]]>
         </example>
     </rule>
 
